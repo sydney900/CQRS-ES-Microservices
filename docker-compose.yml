@@ -1,0 +1,8 @@
+version: '3'
+
+services:
+  cqrsmicroservices:
+    image: cqrsmicroservices
+    build:
+      context: .
+      dockerfile: CqrsMicroservices/Dockerfile
