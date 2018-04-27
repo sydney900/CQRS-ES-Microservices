@@ -2,7 +2,7 @@
 
 namespace CQRS.Domain
 {
-    public class InProcessBusFactory
+    public class ClientInProcessBusFactory
     {
         public static InProcessBus Create()
         {
@@ -18,7 +18,7 @@ namespace CQRS.Domain
             bus.RegisterHandler<RenameClientCommand>(commands.Handle);
 
             //register event handlers
-            var detail = new ClinetDetailEventHandlers();
+            var detail = new ClientDetailEventHandlers();
             bus.RegisterHandler<ClientCreatedEvent>(detail.Handle);
             bus.RegisterHandler<ClientRenamedEvent>(detail.Handle);
             bus.RegisterHandler<ClientRemovedEvent>(detail.Handle);

@@ -3,7 +3,7 @@ using System;
 
 namespace CQRS.Domain
 {
-    public class ClinetDetailEventHandlers : IHandler<ClientCreatedEvent>, IHandler<ClientRenamedEvent>, IHandler<ClientRemovedEvent>
+    public class ClientDetailEventHandlers : IHandler<ClientCreatedEvent>, IHandler<ClientRenamedEvent>, IHandler<ClientRemovedEvent>
     {
         public void Handle(ClientCreatedEvent message)
         {
