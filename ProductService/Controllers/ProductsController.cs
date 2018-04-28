@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ProductService.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("")]
     public class ProductsController : Controller
     {
         InProcessBus _bus;

@@ -1,44 +1,57 @@
 {
-    "ReRoutes": [
-      {
-        "DownstreamPathTemplate": "/api/clients",
-        "DownstreamScheme": "http",
-        "DownstreamHostAndPorts": [
-          {
-            "Host": "clientservice",
-            "Port": 80
-          }
-        ],
-        "UpstreamPathTemplate": "/clients",
-        "UpstreamHttpMethod": [ "Get" ]
-      },
-      {
-        "DownstreamPathTemplate": "/api/clients/{id}",
-        "DownstreamScheme": "http",
-        "DownstreamHostAndPorts": [
-          {
-            "Host": "clientservice",
-            "Port": 80
-          }
-        ],
-        "UpstreamPathTemplate": "/clients/{id}",
-        "UpstreamHttpMethod": [ "Get" ]
-      },
-      {
-        "DownstreamPathTemplate": "/api/products",
-        "DownstreamScheme": "http",
-        "DownstreamHostAndPorts": [
-          {
-            "Host": "productservice",
-            "Port": 80
-          }
-        ],
-        "UpstreamPathTemplate": "/products",
-        "UpstreamHttpMethod": [ "Get" ]
-      }
-    ],
-    "GlobalConfiguration": {
-        "RequestIdKey": "OcRequestId",
-        "AdministrationPath": "/administration"
+  "ReRoutes": [
+    {
+      "DownstreamPathTemplate": "/",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "clientservice",
+          "Port": 80
+        }
+      ],
+      "UpstreamPathTemplate": "/clients",
+      "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete", "Patch" ]
+    },
+    {
+      "DownstreamPathTemplate": "/{any}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "clientservice",
+          "Port": 80
+        }
+      ],
+      "UpstreamPathTemplate": "/clients/{any}",
+      "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete", "Patch" ]
+    },
+    {
+      "DownstreamPathTemplate": "/",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "productservice",
+          "Port": 80
+        }
+      ],
+      "UpstreamPathTemplate": "/products",
+      "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete", "Patch" ]
+    },
+    {
+      "DownstreamPathTemplate": "/{any}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "productservice",
+          "Port": 80
+        }
+      ],
+      "UpstreamPathTemplate": "/products/{any}",
+      "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete", "Patch" ]
     }
+
+  ],
+  "GlobalConfiguration": {
+    "RequestIdKey": "OcRequestId",
+    "AdministrationPath": "/administration"
+  }
 }

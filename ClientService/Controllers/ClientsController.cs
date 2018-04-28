@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ClientService.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("")]
     public class ClientsController : Controller
     {
         InProcessBus _bus;
