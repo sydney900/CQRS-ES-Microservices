@@ -19,21 +19,18 @@ namespace ProductService.Controllers
             _readmodel = readmodel;
         }
 
-        // GET api/values
         [HttpGet]
         public IEnumerable<ProductListDto> Get()
         {
             return _readmodel.GetProductListDto();
         }
 
-        // GET api/values/5
         [HttpGet("{id}")]
         public ProductDetailDto Get(Guid id)
         {
             return _readmodel.GetProductDetailDto(id);
         }
 
-        // POST api/values
         [HttpPost]
         public void Post(string name)
         {

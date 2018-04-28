@@ -1,8 +1,20 @@
 version: '3'
 
 services:
+  apigateway:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+#    ports:
+#      - "80"
+
   clientservice:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-    ports:
-      - "80"
+#    ports:
+#      - "80"
+
+  productservice:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+#    ports:
+#      - "80"
