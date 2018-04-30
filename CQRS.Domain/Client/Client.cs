@@ -13,8 +13,6 @@ namespace CQRS.Domain
 
         public Client(Guid id, string name) : base(id)
         {
-            this.name = name;
-
             ApplyChange(new ClientCreatedEvent(Id, name));
         }
 
@@ -27,6 +25,17 @@ namespace CQRS.Domain
         public void Remove()
         {
             ApplyChange(new ClientRemovedEvent(Id));
+        }
+
+        private void Apply(ClientCreatedEvent e)
+        {
+            Id = e.Id;
+            name = e.Name;
+        }
+
+        private void Apply(ClientRenamedEvent e)
+        {
+            name = e.NewName;
         }
     }
 

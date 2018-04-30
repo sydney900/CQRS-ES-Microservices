@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using CQRS.Core;
 using CQRS.Domain;
 using Microsoft.AspNetCore.Mvc;
 
@@ -19,21 +20,18 @@ namespace ClientService.Controllers
             _readmodel = readmodel;
         }
 
-        // GET api/values
         [HttpGet]
         public IEnumerable<ClientListDto> Get()
         {
             return _readmodel.GetClientListDto();
         }
 
-        // GET api/values/5
         [HttpGet("{id}")]
         public ClientDetailDto Get(Guid id)
         {
             return _readmodel.GetClientDetailDto(id);
         }
 
-        // POST api/values
         [HttpPost]
         public void Post(string name)
         {

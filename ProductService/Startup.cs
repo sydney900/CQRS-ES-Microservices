@@ -1,4 +1,5 @@
-﻿using CQRS.Domain;
+﻿using CQRS.Core;
+using CQRS.Domain;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;

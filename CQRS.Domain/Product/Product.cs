@@ -13,8 +13,6 @@ namespace CQRS.Domain
 
         public Product(Guid id, string name) : base(id)
         {
-            this.name = name;
-
             ApplyChange(new ProductCreatedEvent(Id, name));
         }
 
@@ -27,6 +25,17 @@ namespace CQRS.Domain
         public void Remove()
         {
             ApplyChange(new ProductRemovedEvent(Id));
+        }
+
+        private void Apply(ProductCreatedEvent e)
+        {
+            Id = e.Id;
+            name = e.Name;
+        }
+
+        private void Apply(ProductRenamedEvent e)
+        {
+            name = e.NewName;
         }
     }
 

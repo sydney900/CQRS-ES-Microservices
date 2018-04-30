@@ -7,6 +7,12 @@
 
   <ItemGroup>
     <PackageReference Include="Confluent.Kafka" Version="0.11.4" />
+    <PackageReference Include="RandomNameGeneratorLibrary" Version="1.2.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\KafkaHelper\KafkaHelper.csproj" />
+    <ProjectReference Include="..\CQRS.Domain\CQRS.Domain.csproj" />
   </ItemGroup>
 
 </Project>

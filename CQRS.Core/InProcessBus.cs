@@ -1,9 +1,8 @@
-﻿using CQRS.Core;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Threading;
 
-namespace CQRS.Domain
+namespace CQRS.Core
 {
     public class InProcessBus : ICommandSender, IEventPublisher
     {
@@ -13,7 +12,7 @@ namespace CQRS.Domain
         {
             List<Action<IMessage>> handlers;
 
-            if(!_routes.TryGetValue(typeof(T), out handlers))
+            if (!_routes.TryGetValue(typeof(T), out handlers))
             {
                 handlers = new List<Action<IMessage>>();
                 _routes.Add(typeof(T), handlers);
@@ -31,8 +30,8 @@ namespace CQRS.Domain
                 foreach (var handler in handlers)
                 {
                     var handler1 = handler;
-                    ThreadPool.QueueUserWorkItem(x => handler1(command));
-                }                
+                    System.Threading.Tasks.Task.Run(() => handler1(command));
+                }
             }
             else
             {
@@ -46,10 +45,10 @@ namespace CQRS.Domain
 
             if (!_routes.TryGetValue(@event.GetType(), out handlers)) return;
 
-            foreach(var handler in handlers)
+            foreach (var handler in handlers)
             {
                 var handler1 = handler;
-                ThreadPool.QueueUserWorkItem(x => handler1(@event));
+                System.Threading.Tasks.Task.Run(() => handler1(@event));
             }
         }
     }
