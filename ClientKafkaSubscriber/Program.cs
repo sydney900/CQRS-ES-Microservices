@@ -1,4 +1,5 @@
-﻿using CQRS.Core;
+﻿using Common;
+using CQRS.Core;
 using CQRS.Domain;
 using KafkaHelper;
 using Microsoft.Extensions.Configuration;
@@ -6,7 +7,8 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 
-namespace ClientKafkaProducer
+
+namespace ClientKafkaSubscriber
 {
     class Program
     {
@@ -15,26 +17,21 @@ namespace ClientKafkaProducer
         static void Main(string[] args)
         {
             var builder = new ConfigurationBuilder()
-            .SetBasePath(Directory.GetCurrentDirectory())
-            .AddJsonFile("appsettings.json");
+                            .SetBasePath(Directory.GetCurrentDirectory())
+                            .AddJsonFile("appsettings.json");
 
             Configuration = builder.Build();
 
 
             var config = Configuration.GetValue<Dictionary<string, object>>("KafkaSetting:Config");
             var topic = Configuration["KafkaSetting:Topic"];
+            var millisecondsTimeout = Configuration.GetValue<int>("KafkaSetting:MillisecondsTimeout");
 
             try
             {
-                using (KafkaCommandSender publisher = new KafkaCommandSender(config, new MySerializer(), topic))
+                using (var publisher = new KafkaSubscriber<CreateClientCommand>(config, topic, new MySerializer(), new TestHandler(), millisecondsTimeout))
                 {
-                    IEnumerable<string> names = NameGeneratorHelper.Generate(10);
-                    foreach (string name in names)
-                    {
-                        publisher.Send(new CreateClientCommand(Guid.NewGuid(), name));
-
-                        System.Threading.Tasks.Task.Delay(30000);
-                    }
+                    publisher.Subscriber();
                 }
             }
             catch (Exception ex)
@@ -42,8 +39,14 @@ namespace ClientKafkaProducer
                 Console.WriteLine(ex.ToString());
             }
 
+        }
+    }
 
-            Console.WriteLine("10 people name published!");
+    class TestHandler : IReceivedHandler<CreateClientCommand>
+    {
+        public void Process(CreateClientCommand t)
+        {
+            Console.WriteLine(t.Name);
         }
     }
 }
