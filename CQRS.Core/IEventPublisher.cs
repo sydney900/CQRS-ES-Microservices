@@ -2,6 +2,5 @@
 {
     public interface IEventPublisher : IPublisher<IEvent>
     {
-        void Publish(IEvent @event);
     }
 }

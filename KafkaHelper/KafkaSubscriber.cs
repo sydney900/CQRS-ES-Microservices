@@ -25,6 +25,7 @@ namespace KafkaHelper
             this.serializer = serializer;
             this.receivedHandler = receivedHandler;
             this.millisecondsTimeout = millisecondsTimeout;
+            this.disposing = false;
         }
 
         private Consumer<Null, string> Consumer

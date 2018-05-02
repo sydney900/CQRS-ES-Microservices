@@ -6,6 +6,7 @@ using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 
 
 namespace ClientKafkaSubscriber
@@ -23,7 +24,10 @@ namespace ClientKafkaSubscriber
             Configuration = builder.Build();
 
 
-            var config = Configuration.GetValue<Dictionary<string, object>>("KafkaSetting:Config");
+//            var config = Configuration.GetValue<Dictionary<string, object>>("KafkaSetting:Config");
+            var config = Configuration.GetSection("KafkaSetting:Config").GetChildren()
+                    .Select(item => new KeyValuePair<string, object>(item.Key, item.Value))
+                    .ToDictionary(x => x.Key, x => x.Value);
             var topic = Configuration["KafkaSetting:Topic"];
             var millisecondsTimeout = Configuration.GetValue<int>("KafkaSetting:MillisecondsTimeout");
 
