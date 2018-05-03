@@ -32,6 +32,10 @@ namespace KafkaHelper
                 if (!disposing && producer == null)
                 {
                     producer = new Producer<Null, string>(config, null, new StringSerializer(Encoding.UTF8));
+                    producer.OnError += (EventHandler<Error>)((_, err) =>
+                    {
+                        Console.WriteLine(err.Reason);
+                    });
                 }
 
                 return producer;

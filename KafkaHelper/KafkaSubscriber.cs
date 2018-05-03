@@ -86,11 +86,7 @@ namespace KafkaHelper
             }
 
             this.GetType().RemoveAllEventHandlers();
-            if (consumer != null)
-            {
-                consumer.Dispose();
-                consumer = null;
-            }
+            consumer = null;
         }
     }
 }
