@@ -36,14 +36,19 @@ services:
       - "9092:9092" 
     environment: 
       KAFKA_ADVERTISED_HOST_NAME: 0.0.0.0 
-      KAFKA_CREATE_TOPICS: "Clients-Topic:1:1,Products-Topic:1:1" 
+      KAFKA_CREATE_TOPICS: "Clients-Topic,Products-Topic" 
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181 
     volumes:                                                                                                                                                                                                 
       - /var/run/docker.sock:/var/run/docker.sock 
 
-  kafkarest:
+  kafkarestproxy:
     image: confluentinc/cp-kafka-rest:4.1.0
     environment: 
-      KAFKA_REST_ZOOKEEPER_CONNECT: "localhost:32181"
-      KAFKA_REST_LISTENERS: "http://localhost:8082"
-      KAFKA_REST_HOST_NAME: "localhost"
+      KAFKA_REST_ZOOKEEPER_CONNECT: "zookeeper:2181"
+      KAFKA_REST_LISTENERS: http://0.0.0.0:8082/
+      KAFKA_REST_HOST_NAME: kafkarestproxy
+      KAFKA_REST_BOOTSTRAP_SERVERS: kafka:9092
+
+networks:
+  CqrsMicroservices:
+    driver: bridge 

@@ -81,8 +81,10 @@ function getSingleTopicPartition() {
     });
 }
 
-listBrokers();
-listTopics();
-getSingleTopic();
-listTopicPartitions();
-getSingleTopicPartition();
+module.exports = {
+    listBrokers,
+    listTopics,
+    getSingleTopic,
+    listTopicPartitions,
+    getSingleTopicPartition
+};

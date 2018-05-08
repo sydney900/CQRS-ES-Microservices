@@ -1,0 +1,12 @@
+{
+  "name": "nodejs-client",
+  "version": "0.0.0",
+  "description": "NodejsClient",
+  "main": "app.js",
+  "author": {
+    "name": "Bing"
+  },
+  "dependencies": {
+    "kafka-rest": "0.0.5"
+  }
+}

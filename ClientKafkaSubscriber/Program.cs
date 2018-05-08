@@ -24,7 +24,6 @@ namespace ClientKafkaSubscriber
             Configuration = builder.Build();
 
 
-//            var config = Configuration.GetValue<Dictionary<string, object>>("KafkaSetting:Config");
             var config = Configuration.GetSection("KafkaSetting:Config").GetChildren()
                     .Select(item => new KeyValuePair<string, object>(item.Key, item.Value))
                     .ToDictionary(x => x.Key, x => x.Value);
