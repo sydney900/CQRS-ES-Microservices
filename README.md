@@ -3,7 +3,7 @@
 Open solution with Visual Studio 2017 and run in docker mode
 
 ## Version 1
-![alt text](https://github.com/sydney900/CQRS-RS-Microservices/blob/master/Version1.png "Version 2 Chart")
+![alt text](https://github.com/sydney900/CQRS-RS-Microservices/blob/master/Version1.png "Version 1 Chart")
 
 ## Version 2
 ![alt text](https://github.com/sydney900/CQRS-RS-Microservices/blob/master/Version2.png "Version 2 Chart")
@@ -16,7 +16,7 @@ run :
    docker run -p 2181:2181 -p 9092:9092 --env ADVERTISED_HOST=`docker-machine ip \`docker-machine active\`` --env ADVERTISED_PORT=9092 --env TOPICS=Clients-Topic,Products-Topic --env GROUP_ID=clients-consumer-group spotify/kafka
 ```
 
-list topics:  
+list topics:  (8f5588924e89 is container id)
 ```
    docker exec 8f5588924e89 /opt/kafka_2.11-0.10.1.0/bin/kafka-topics.sh --list --zookeeper localhost:2181
 ```
