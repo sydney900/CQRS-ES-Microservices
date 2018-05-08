@@ -5,6 +5,8 @@ Open solution with Visual Studio 2017 and run in docker mode
 ## Version 1
 ![alt text](https://github.com/sydney900/CQRS-RS-Microservices/blob/master/Version1.png "Version1 Chart")
 
+## Version 1
+
 ## How to use spotify/kafka
 run : 
 ```
