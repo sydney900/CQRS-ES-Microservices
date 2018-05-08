@@ -1,0 +1,26 @@
+version: '3.4'
+
+services:
+  apigateway:
+    image: apigateway
+    build:
+      context: .
+      dockerfile: ApiGateway/Dockerfile
+    ports: 
+      - "64000:80"
+
+  clientservice:
+    image: clientservice
+    build:
+      context: .
+      dockerfile: ClientService/Dockerfile
+    ports: 
+      - "64001:80"
+
+  productservice:
+    image: productservice
+    build:
+      context: .
+      dockerfile: ProductService/Dockerfile
+    ports: 
+      - "64002:80"

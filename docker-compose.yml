@@ -1,4 +1,4 @@
-version: '3'
+version: '3.4'
 
 services:
   apigateway:
@@ -48,7 +48,3 @@ services:
       KAFKA_REST_LISTENERS: http://0.0.0.0:8082/
       KAFKA_REST_HOST_NAME: kafkarestproxy
       KAFKA_REST_BOOTSTRAP_SERVERS: kafka:9092
-
-networks:
-  CqrsMicroservices:
-    driver: bridge 
