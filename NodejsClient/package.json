@@ -2,7 +2,7 @@
   "name": "nodejs-client",
   "version": "0.0.0",
   "description": "NodejsClient",
-  "main": "app.js",
+  "main": "myConsumer.js",
   "author": {
     "name": "Bing"
   },

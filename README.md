@@ -45,8 +45,10 @@ docker run --rm -v /var/run/docker.sock:/var/run/docker.sock -e HOST_IP=$1 -e ZK
 ```
 
 ## wurstmeister/kafka command
+```
 docker exec 8f5588924e89 /bin/kafka-topics.sh --list --zookeeper localhost:2181
 docker exec 8f5588924e89 /bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic test
+```
 
 ## Credits
 * https://github.com/gregoryyoung/m-r
