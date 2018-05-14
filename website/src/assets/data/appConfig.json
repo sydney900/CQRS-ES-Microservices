@@ -1,0 +1,6 @@
+{
+  "apiUrl": "http://192.168.99.100:8082",
+  "topicName": "Clients-Topic",
+  "consumerGroup": "clients-consumer-group",
+  "fromBeginning": true
+}

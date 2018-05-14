@@ -1,0 +1,32 @@
+
+<div style="text-align:center">
+  <h3>
+    Clients
+  </h3>
+</div>
+
+<mat-list>
+  <mat-card *ngFor="let entry of clients | async | select: 'clients'">
+    <mat-card-header>
+      <div mat-card-avatar>
+        <i class="material-icons">person</i>
+      </div>
+      <mat-card-title>{{entry.clientName}}</mat-card-title>
+      <button mat-mini-fab (click)="onDeleteClient(entry.id)" color="primary">
+        <mat-icon>delete</mat-icon>
+      </button>
+    </mat-card-header>
+    <mat-card-content>
+      <div>
+        Email: <span> {{entry.email}} </span>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</mat-list>
+<div layout-algin="end center">
+  <button (click)="onAddClient()" mat-mini-fab>
+    <mat-icon>add</mat-icon>
+  </button>
+</div>
+
+

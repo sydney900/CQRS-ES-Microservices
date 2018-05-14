@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { MaterialModule } from './mat.module';
 import { RouterModule, Routes  } from '@angular/router';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 import { ClientListComponent } from './clients/client-list/client-list.component';
@@ -35,6 +36,7 @@ const appRoutes: Routes = [
     FormsModule,
     ReactiveFormsModule,
     MaterialModule,
+	HttpClientModule,
     RouterModule.forRoot(
       appRoutes,
     )
