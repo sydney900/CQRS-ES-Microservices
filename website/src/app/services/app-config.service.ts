@@ -1,24 +1,24 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Config } from '../models/config';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AppConfigService {
 
-  private configUrl;
-  private appConfig;
-  
+  private configUrl: string;
+  private appConfig: Config;
 
-  constructor(private http: HttpClient) { 
-    this.configUrl='/assets/data/appConfig.json';
+
+  constructor(private http: HttpClient) {
+    this.configUrl = '/assets/data/appConfig.json';
   }
 
-  async getConfig(): Config {
-	  if (!this.appConfig) {
-		  var res = await this.http.get<Config>(this.configUrl).toPromise();
-		  return res.tojson();
-	  }
+  async getConfig() {
+    if (!this.appConfig) {
+      return await this.http.get<Config>(this.configUrl).toPromise().then(x => this.appConfig = x);
+    }
     return this.appConfig;
   }
 }

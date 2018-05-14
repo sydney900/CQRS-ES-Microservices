@@ -1,5 +1,6 @@
-export interface config {
-	apiUrl:string;
-	topicName:string;
-	consumerGroup: string;
+export interface Config {
+  apiUrl: string;
+  topicName: string;
+  consumerGroup: string;
+  fromBeginning: boolean;
 }

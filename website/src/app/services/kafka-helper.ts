@@ -1,5 +1,5 @@
 import KafkaRest from "kafka-rest";
-import { Observable, Subject } from 'rxjs';
+import { Observable, Subject, bindCallback } from 'rxjs';
 import { map, take } from 'rxjs/operators';
 
 export class KafkaSender {
@@ -21,11 +21,11 @@ export class KafkaSender {
 		}
 	}
 
-	sendCommand(command): Observable {
+	sendCommand(command): Observable<any> {
 		this.tryToInitialize();
 
 		if (this.target) {
-			var produce = Rx.Observable.fromCallback(this.target.produce);
+			var produce = bindCallback(this.target.produce);
 			return produce(JSON.stringify(command));
 		}
 	}
@@ -52,7 +52,7 @@ export class KafkaConsumer {
 			console.log("Shutdown cleanly.");
 	}
 
-	subscribe(observer: any): Observable<string> {
+	consume(): Observable<string> {
 		return new Observable(observer => {
 			if (!this.kafka) {
 				this.consumerConfig = {
