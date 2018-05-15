@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
+import { ClientService } from '../../services/client.service';
 
 @Component({
   selector: 'app-client-list',
@@ -11,10 +12,10 @@ export class ClientListComponent implements OnInit {
 
   clients: Observable<any>;
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, private clientService: ClientService) { }
 
   ngOnInit() {
-    this.clients = new Observable();
+    this.clients = this.clientService.getClients();
   }
 
   onAddClient() {

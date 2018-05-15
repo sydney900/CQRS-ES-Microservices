@@ -1,3 +1,4 @@
+///<reference path="../../../node_modules/@types/node/index.d.ts"/>
 import KafkaRest from "kafka-rest";
 import { Observable, Subject, bindCallback } from 'rxjs';
 import { map, take } from 'rxjs/operators';
@@ -24,10 +25,23 @@ export class KafkaSender {
 	sendCommand(command): Observable<any> {
 		this.tryToInitialize();
 
-		if (this.target) {
-			var produce = bindCallback(this.target.produce);
-			return produce(JSON.stringify(command));
-		}
+		return new Observable(observer => {
+			if (this.target) {
+				return this.target.produce(JSON.stringify(command), function(err,res){
+					if (err) {
+						observer.error(err);
+					}
+					else {
+						observer.next(res);
+						observer.complete();
+					}
+				});
+			}
+			else
+			{
+				observer.error("Not such a topic in  ")
+			}
+		});
 	}
 
 }
