@@ -15,18 +15,18 @@ export class ClientListComponent implements OnInit {
   constructor(private router: Router, private clientService: ClientService) { }
 
   ngOnInit() {
-    this.clients = this.clientService.getClients();
+    this.clients = this.clientService.getClientCreated();
   }
 
   onAddClient() {
-    //navigate to creat client
-    console.log("navigate to creat client");
+    // navigate to creat client
+    console.log('navigate to creat client');
 
-    this.router.navigate(["/create-client"]);
+    this.router.navigate(['/create-client']);
   }
 
   onDeleteClient(id) {
-    //delete the client
-    console.log("delete the client");
+    // delete the client
+    console.log('delete the client');
   }
 }

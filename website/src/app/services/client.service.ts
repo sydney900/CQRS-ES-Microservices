@@ -1,33 +1,38 @@
 import { Injectable } from '@angular/core';
-
+import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map, take, catchError } from 'rxjs/operators';
 
 import { Client } from '../models/client';
-import { KafkaSender, KafkaConsumer } from './kafka-helper';
 import { AppConfigService } from './app-config.service';
+import { Config } from 'protractor';
 
 
 @Injectable({
   providedIn: 'root'
 })
 export class ClientService {
+  private appConfig: Config;
 
-  constructor(private configService: AppConfigService) {
+  constructor(private configService: AppConfigService, private http: HttpClient) {
     configService.getConfig().then(config => {
-      this.sender = new KafkaSender(config.apiUrl, config.topicName);
-      this.consumer = new KafkaConsumer(config.apiUrl, config.topicName, config.consumerGroup, config.fromBeginning);
+      this.appConfig = config;
     });
   }
 
-  private sender: KafkaSender;
-  private consumer: KafkaConsumer;
+  getClientCreated(): Observable<Client> {
+    if (!this.appConfig) {
+      return this.http.get<Client>(this.appConfig.kafkaClientCreatedUrl);
+    }
 
-  getClients(): Observable<Client> {
-    return this.consumer.consume().pipe(map(c => JSON.parse(c)));
+    return Observable.throw('please wait until get configuration.');
   }
 
   sendCommand(command): Observable<any> {
-    return this.sender.sendCommand(command);
+    if (!this.appConfig) {
+      return this.http.post(this.appConfig.kafkaSendCommandUrl, command);
+    }
+
+    return Observable.throw('please wait until get configuration.');
   }
 }
