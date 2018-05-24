@@ -7,9 +7,11 @@ import dotenv from "dotenv";
 import flash from "express-flash";
 import path from "path";
 import expressValidator from "express-validator";
+import cors from "cors";
 
 // Controllers (route handlers)
 import * as clientCommandController from "./controllers/ClientCommand";
+import * as clientConsumerController from "./controllers/clientConsumer";
 
 // Load environment variables from .env file
 dotenv.config({ path: ".env" });
@@ -17,6 +19,9 @@ dotenv.config({ path: ".env" });
 
 // Create Express server
 const app = express();
+
+// support CORS
+app.use(cors());
 
 // Express configuration
 app.set("port", process.env.PORT || 3000);
@@ -31,8 +36,8 @@ app.use(lusca.xssProtection(true));
 /**
  * Primary app routes.
  */
-app.get("/clientCreated", clientCommandController.getClientCreated);
-app.post("/command", clientCommandController.sendCommand);
+app.get("/clientCreated", clientConsumerController.getClientCreated());
+app.post("/command", clientCommandController.sendCommand());
 
 
 export default app;

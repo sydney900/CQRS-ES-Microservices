@@ -1,13 +1,13 @@
+import { Observable, Subject, bindCallback } from 'rxjs';
 import { Client, Producer, Consumer, Offset } from "kafka-node";
-import { Observable, Subject, bindCallback, from } from "rxjs";
-import { map, take } from "rxjs/operators";
+import { map, take } from 'rxjs/operators';
 
 export class KafkaSender {
   constructor(
     public zookeeperConnectionString: string,
     public topicName: string,
     public partitionId: number = 0,
-    public compressionAttributes: number = 0 // 0: No compression, 1: Compress using GZip, 2: Compress using snappy
+    public compressionAttributes: number = 0 //0: No compression, 1: Compress using GZip, 2: Compress using snappy
   ) {
     this.ready = false;
   }
@@ -21,12 +21,12 @@ export class KafkaSender {
       this.client = new Client(this.zookeeperConnectionString);
       this.producer = new Producer(this.client, { requireAcks: 1 });
 
-      this.producer.on("ready", function () {
+      this.producer.on('ready', function () {
         this.ready = true;
       });
 
-      this.producer.on("error", function (err: any) {
-        console.log("error", err);
+      this.producer.on('error', function (err) {
+        console.log('error', err);
       });
     }
   }
@@ -36,14 +36,14 @@ export class KafkaSender {
       return Observable.throw("Please wait for connection...");
     }
 
-    if (!params || params.length === 0) {
+    if (!params || params.length===0) {
       return Observable.throw("No commands need to be sent.");
     }
 
-    const subject = new Subject();
+    var subject = new Subject();
     this.tryToInitialize();
 
-    const payload = [];
+    let payload = [];
     for (let i = 0; i < params.length; i++) {
       payload.push({
         topic: this.topicName,
@@ -53,7 +53,7 @@ export class KafkaSender {
       });
     }
 
-    this.producer.send(payload, function (err: any, result: any) {
+    this.producer.send(payload, function (err, result) {
       if (err) {
         subject.error(err);
       }
@@ -78,44 +78,50 @@ export class KafkaConsumer {
 
   private client: Client;
   private consumer: Consumer;
-  private clientOffset: Offset;
+  private clientoffset: Offset;
   private consumerConfig: any;
 
+  private logShutdown(err, observer): void {
+    if (err && observer)
+      observer.error("Error while shutting down: " + err);
+    else
+      console.log("Shutdown cleanly.");
+  }
+
   consume(): Observable<any> {
-    const subject = new Subject();
+    var subject = new Subject();
 
     this.client = new Client(this.zookeeperConnectionString);
-    // const topics = [{ topic: this.topicName, partition: 1 }, { topic: this.topicName, partition: 0 }];
-    const topics = [{ topic: this.topicName, partition: 0 }];
-    const options = { autoCommit: false, fetchMaxWaitMs: 1000, fetchMaxBytes: 1024 * 1024 };
+    var topics = [{ topic: this.topicName, partition: 1 }, { topic: this.topicName, partition: 0 }];
+    var options = { autoCommit: false, fetchMaxWaitMs: 1000, fetchMaxBytes: 1024 * 1024 };
 
     this.consumer = new Consumer(this.client, topics, options);
-    this.clientOffset = new Offset(this.client);
+    this.clientoffset = new Offset(this.client);
 
-    this.consumer.on("message", function (message: any) {
-      // console.log(message);
+    this.consumer.on('message', function (message) {
+      console.log(message);
       subject.next(message);
     });
 
-    this.consumer.on("error", function (err: any) {
-      console.log("error", err);
+    this.consumer.on('error', function (err) {
+      console.log('error', err);
       subject.error(err);
-    }.bind(this));
+    });
 
     /*
     * If consumer get `offsetOutOfRange` event, fetch data from the smallest(oldest) offset
     */
-    this.consumer.on("offsetOutOfRange", function (topic: any) {
+    this.consumer.on('offsetOutOfRange', function (topic) {
       topic.maxNum = 2;
-      this.clientOffset.fetch([topic], function (err: any, offsets: any) {
+      this.offset.fetch([topic], function (err, offsets) {
         if (err) {
           subject.error(err);
           return console.error(err);
         }
-        const min = Math.min.apply(undefined, offsets[topic.topic][topic.partition]);
+        var min = Math.min.apply(null, offsets[topic.topic][topic.partition]);
         this.consumer.setOffset(topic.topic, topic.partition, min);
-      }.bind(this));
-    }.bind(this));
+      });
+    });
 
     return from(subject);
 

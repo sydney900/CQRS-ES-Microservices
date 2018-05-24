@@ -1,6 +1,4 @@
 export interface Config {
-  apiUrl: string;
-  topicName: string;
-  consumerGroup: string;
-  fromBeginning: boolean;
+  kafkaClientCreatedUrl: string;
+  kafkaSendCommandUrl: string;
 }

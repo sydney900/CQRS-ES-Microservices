@@ -1,56 +1,49 @@
-import kafka from "kafka-node";
+///<reference path="../../../node_modules/@types/node/index.d.ts"/>
+import KafkaRest from "kafka-rest";
 import { Observable, Subject, bindCallback } from 'rxjs';
 import { map, take } from 'rxjs/operators';
 
 export class KafkaSender {
 	constructor(
-		public zookeeperConnectionString: string,
+		public apiUrl: string,
 		public topicName: string,
-		public partitionId: number = 0,
-		public compressAttribute: number = 0  // 0: No compression, 1: Compress using GZip, 2: Compress using snappy	
-	) { 
-		this.ready = false;
-	}
+		public partitionId: number = null
+	) { }
 
-	private client: kafka.Client;
-	private producer: kafka.Producer;
-	private ready: boolean;
+	private kafka: any;
+	private target: any;
 
 	private tryToInitialize(): void {
-		if (!this.client) {
-			this.client = new kafka.Client(this.zookeeperConnectionString);
-			this.producer = new kafka.Producer(this.client, { requireAcks: 1 });			
-			this.producer.on('ready', function () {
-				this.ready = true;
-			});
-
-			this.producer.on('error', function (err) {
-				console.log('error', err);
-			});	  
+		if (!this.kafka) {
+			this.kafka = new KafkaRest({ 'url': this.apiUrl });
+			this.target = this.kafka.topic(this.topicName);
+			if (this.partitionId)
+				this.target = this.target.partition(this.partitionId);
 		}
 	}
 
-	sendCommand(command): void {
+	sendCommand(command): Observable<any> {
 		this.tryToInitialize();
 
-		if (this.ready) {
-			var commandMessage = new kafka.KeyedMessage('command', JSON.stringify(command));
-		
-			this.producer.send([
-			  { 
-				  topic: this.topicName, 
-				  partition: this.partitionId, 
-				  messages: [commandMessage], 
-				  attributes: this.compressAttribute 
-			  }
-			], function (err, result) {
-			  console.log(err || result);
-			});  
-		}
-		else {
-			console.log('please wait for connection...');			
-		}
+		return new Observable(observer => {
+			if (this.target) {
+				return this.target.produce(JSON.stringify(command), function(err,res){
+					if (err) {
+						observer.error(err);
+					}
+					else {
+						observer.next(res);
+						observer.complete();
+					}
+				});
+			}
+			else
+			{
+				observer.error("Not such a topic in  ")
+			}
+		});
 	}
+
 }
 
 export class KafkaConsumer {
@@ -74,42 +67,6 @@ export class KafkaConsumer {
 	}
 
 	consume(): Observable<string> {
-
-		var Offset = kafka.Offset;
-		var Client = kafka.Client;
-		var argv = require('optimist').argv;
-		var topic = argv.topic || 'topic1';
-		
-		var client = new kafka.Client('localhost:2181');
-		var topics = [{ topic: topic, partition: 1 }, { topic: topic, partition: 0 }];
-		var options = { autoCommit: false, fetchMaxWaitMs: 1000, fetchMaxBytes: 1024 * 1024 };
-		
-		var consumer = new kafka.Consumer(client, topics, options);
-		var offset = new Offset(client);
-		
-		consumer.on('message', function (message) {
-		  console.log(message);
-		});
-		
-		consumer.on('error', function (err) {
-		  console.log('error', err);
-		});
-		
-		/*
-		* If consumer get `offsetOutOfRange` event, fetch data from the smallest(oldest) offset
-		*/
-		consumer.on('offsetOutOfRange', function (topic) {
-		  topic.maxNum = 2;
-		  offset.fetch([topic], function (err, offsets) {
-			if (err) {
-			  return console.error(err);
-			}
-			var min = Math.min.apply(null, offsets[topic.topic][topic.partition]);
-			consumer.setOffset(topic.topic, topic.partition, min);
-		  });
-		});
-		
-		
 		return new Observable(observer => {
 			if (!this.kafka) {
 				this.consumerConfig = {

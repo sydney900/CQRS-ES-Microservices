@@ -1,12 +1,12 @@
 {
-  "name": "express-typescript-starter",
+  "name": "typescript-kafka",
   "version": "0.1.0",
-  "description": "A starting point for Node.js express apps with TypeScript",
+  "description": "TypeScript kafka server by make use of Kafka Node",
   "repository": {
     "type": "git",
     "url": "https://github.com/Microsoft/TypeScript-Node-Starter"
   },
-  "author": "Bowden Kelly",
+  "author": "Bing Wang",
   "license": "MIT",
   "scripts": {
     "start": "npm run serve",
@@ -27,8 +27,10 @@
     "watch-debug": "concurrently -k -p \"[{name}]\" -n \"Sass,TypeScript,Node\" -c \"yellow.bold,cyan.bold,green.bold\" \"npm run watch-sass\" \"npm run watch-ts\" \"npm run serve-debug\""
   },
   "dependencies": {
+    "@types/cors": "^2.8.4",
     "body-parser": "^1.18.2",
     "compression": "^1.7.1",
+    "cors": "^2.8.4",
     "dotenv": "^4.0.0",
     "errorhandler": "^1.5.0",
     "express": "^4.16.2",
@@ -63,6 +65,7 @@
     "jest": "^22.0.4",
     "nodemon": "^1.13.0",
     "shelljs": "^0.8.1",
+    "superagent": "^3.8.3",
     "supertest": "^3.0.0",
     "ts-jest": "^22.0.4",
     "ts-node": "^5.0.0",

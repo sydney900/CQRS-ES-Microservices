@@ -1,9 +1,11 @@
 import request from "supertest";
 import app from "../src/app";
 
-describe("GET /command", () => {
+describe("Post /command", () => {
   it("should return 200 OK", () => {
-    return request(app).get("/command")
+    request(app)
+      .post("/command")
+      .field("command", JSON.stringify({ Id: "0001", Name: "TypeKafka" }))
       .expect(200);
   });
 });
