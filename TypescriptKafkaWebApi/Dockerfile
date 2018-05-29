@@ -1,11 +1,18 @@
-FROM node:9-alpine
+FROM node:9-alpine as builder
 ENV NODE_ENV production
+RUN apk update && apk upgrade && apk add --no-cache bash git openssh
 WORKDIR /usr/src/app
 COPY ["package.json", "package-lock.json*", "./"]
-RUN npm install --production --silent && mv node_modules ../
-# COPY ["webpack.config.js", "index.api.js", "./"]
-COPY ["index.api.js", "./"]
-COPY ./server server/
+RUN npm install --production --silent
+COPY ["tsconfig.json", "tslint.json", "./"]
+COPY ./src ./src/
+COPY ./.env.docker ./.env
+RUN npm run build
+
+FROM node:9-alpine as builder
+ENV NODE_ENV production
+RUN apk update && apk upgrade && apk add --no-cache bash git openssh
+WORKDIR /usr/src/app
+COPY --from=builder /usr/src/app/dist /usr/src/app/
 EXPOSE 80
-EXPOSE 27017
-CMD node index.api.js
+CMD node server.js

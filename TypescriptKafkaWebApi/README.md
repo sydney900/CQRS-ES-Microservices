@@ -42,3 +42,11 @@ https://storage.googleapis.com/kubernetes-release/release/v1.10.3/bin/windows/am
 .\kubectl.exe get deployment
 
 
+### How to use local docker images with Minikube?
+to use a image without uploading it you can follow these steps:
+1.set the environment variables with eval $(minikube docker-env)
+2.build the image with the Docker daemon of Minukube (eg docker build -t my-image .)
+3.set the image in the pod spec like the build tag (eg my-image)
+4.set the imagePullPolicy to Never, otherwise Kubernetes will try to download the image.
+
+

@@ -47,7 +47,21 @@
       ],
       "UpstreamPathTemplate": "/products/{any}",
       "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete", "Patch" ]
-    }
+    },
+	
+    {
+      "DownstreamPathTemplate": "/{any}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "typescriptkafkawebapi",
+          "Port": 80
+        }
+      ],
+      "UpstreamPathTemplate": "/kafka/{any}",
+      "UpstreamHttpMethod": [ "Get", "Post" ]
+    },
+	
 
   ],
   "GlobalConfiguration": {
