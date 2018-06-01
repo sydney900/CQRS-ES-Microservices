@@ -37,8 +37,17 @@ services:
       TOPICNAME: "Clients-Topic"
       PARTITIONID: 0
       COMPRESSIONATTRIBUTES: 0
-      CONSUMERGROUP: 
-      FROMBEGINNING: false      
+      CONSUMERGROUP: ""
+      FROMBEGINNING: "false"
+
+  website:
+    image: website
+    build:
+      context: .
+      dockerfile: website/Dockerfile
+    environment: 
+      KAFKACLIENTCREATEDURL: "typescriptkafkawebapi:64003/clientCreated"
+      KAFKASENDCOMMANDURL: "typescriptkafkawebapi:64003/command"
 
   zookeeper: 
     image: wurstmeister/zookeeper:3.4.6 

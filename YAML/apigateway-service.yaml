@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: apigateway
+  labels:
+    service: apigateway
+spec:
+  ports:
+  - name: "64000"
+    port: 64000
+    targetPort: 80
+  selector:
+    io.kompose.service: apigateway
+status:
+  loadBalancer: {}

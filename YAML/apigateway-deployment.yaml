@@ -1,0 +1,23 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: apigateway
+  labels:
+    service: apigateway
+spec:
+  replicas: 1
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        service: apigateway
+    spec:
+      containers:
+      - image: apigateway
+        name: apigateway
+        ports:
+        - containerPort: 80
+        resources: {}
+      restartPolicy: Always
+status: {}

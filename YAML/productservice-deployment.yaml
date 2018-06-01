@@ -1,0 +1,23 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: productservice
+  labels:
+    service: productservice
+spec:
+  replicas: 1
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        service: productservice
+    spec:
+      containers:
+      - image: productservice
+        name: productservice
+        ports:
+        - containerPort: 80
+        resources: {}
+      restartPolicy: Always
+status: {}

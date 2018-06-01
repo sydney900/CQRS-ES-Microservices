@@ -1,10 +1,10 @@
 FROM node:9-alpine as builder
 RUN apk update && apk upgrade && apk add --no-cache bash git openssh
 WORKDIR /app
-COPY ["package.json", "package-lock.json*", "./"]
-RUN npm install --production --silent
-COPY ["tsconfig.json", "tslint.json", "angular.json", "default.conf", "./"]
-COPY ./src/ ./src/
+COPY ["website/package.json", "website/package-lock.json", "./"]
+RUN npm install
+COPY ["website/tsconfig.json", "website/tslint.json", "website/angular.json", "website/default.conf", "./"]
+COPY website/src/ ./src/
 RUN npm run build
 
 FROM nginx:1.13.9-alpine
