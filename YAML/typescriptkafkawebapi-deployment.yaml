@@ -1,0 +1,35 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: typescriptkafkawebapi
+  labels:
+    service: typescriptkafkawebapi
+spec:
+  replicas: 1
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        service: typescriptkafkawebapi
+    spec:
+      containers:
+      - env:
+        - name: COMPRESSIONATTRIBUTES
+          value: "0"
+        - name: CONSUMERGROUP
+        - name: FROMBEGINNING
+          value: "false"
+        - name: PARTITIONID
+          value: "0"
+        - name: TOPICNAME
+          value: Clients-Topic
+        - name: ZOOKEEPERCONNECTIONSTRING
+          value: zookeeper:2181
+        image: typescriptkafkawebapi
+        name: typescriptkafkawebapi
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 80
+        resources: {}
+      restartPolicy: Always
+status: {}

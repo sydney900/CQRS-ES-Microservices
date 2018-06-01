@@ -10,7 +10,7 @@ import expressValidator from "express-validator";
 import cors from "cors";
 
 // Controllers (route handlers)
-import * as clientCommandController from "./controllers/ClientCommand";
+import * as clientCommandController from "./controllers/clientCommand";
 import * as clientConsumerController from "./controllers/clientConsumer";
 
 // Load environment variables from .env file

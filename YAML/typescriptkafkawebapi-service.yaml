@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: typescriptkafkawebapi
+  labels:
+    service: typescriptkafkawebapi
+spec:
+  ports:
+  - name: "64003"
+    port: 64003
+    targetPort: 80
+  selector:
+    service: typescriptkafkawebapi
+status:
+  loadBalancer: {}

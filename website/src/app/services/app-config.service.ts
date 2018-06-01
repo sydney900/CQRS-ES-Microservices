@@ -16,9 +16,15 @@ export class AppConfigService {
   }
 
   async getConfig() {
+    if (!this.appConfig && process.env.KAFKACLIENTCREATEDURL && process.env.KAFKASENDCOMMANDURL) {
+      this.appConfig.kafkaClientCreatedUrl = process.env.KAFKACLIENTCREATEDURL;
+      this.appConfig.kafkaSendCommandUrl = process.env.KAFKASENDCOMMANDURL;
+    }
+
     if (!this.appConfig) {
       return await this.http.get<Config>(this.configUrl).toPromise().then(x => this.appConfig = x);
     }
+
     return this.appConfig;
   }
 }

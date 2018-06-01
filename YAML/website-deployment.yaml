@@ -1,0 +1,26 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  labels:
+    service: website
+  name: website
+spec:
+  replicas: 1
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        service: website
+    spec:
+      containers:
+      - env:
+        - name: KAFKACLIENTCREATEDURL
+          value: typescriptkafkawebapi:64003/clientCreated
+        - name: KAFKASENDCOMMANDURL
+          value: typescriptkafkawebapi:64003/command
+        image: website
+        name: website
+        imagePullPolicy: Never
+        resources: {}
+      restartPolicy: Always
+status: {}

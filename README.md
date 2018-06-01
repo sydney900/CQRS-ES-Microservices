@@ -9,6 +9,27 @@ Open solution with Visual Studio 2017 and run in docker mode
 ![alt text](https://github.com/sydney900/CQRS-RS-Microservices/blob/master/Version2.png "Version 2 Chart")
 
 
+## How to use minikube
+### install Minikube and Kubectl
+1. Minikube download: https://github.com/kubernetes/minikube/releases
+
+2. Kubectl versions are available at a generic location as per the following format: https://storage.googleapis.com/kubernetes-release/release/${K8S_VERSION}/bin/${GOOS}/${GOARCH}/${K8S_BINARY}
+
+3. how to get latest stabel: 
+https://storage.googleapis.com/kubernetes-release/release/stable.txt
+
+4. windows version download: https://storage.googleapis.com/kubernetes-release/release/v1.10.3/bin/windows/amd64/kubectl.exe
+
+5. windows version Minikube must be installed in system disk. 
+
+### use Minikube
+```
+./minikube.exe start
+eval $(./minikube docker-env)
+docker-compose build
+/kubectl create -f YAML
+.\minikube.exe dashboard
+```
 
 ## How to use spotify/kafka
 run : 

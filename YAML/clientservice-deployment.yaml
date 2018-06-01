@@ -1,0 +1,23 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: clientservice
+  labels:
+    service: clientservice
+spec:
+  replicas: 1
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        service: clientservice
+    spec:
+      containers:
+      - image: clientservice
+        name: clientservice
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 80
+        resources: {}
+      restartPolicy: Always
+status: {}
