@@ -4,7 +4,7 @@
   "description": "TypeScript kafka server by make use of Kafka Node",
   "repository": {
     "type": "git",
-    "url": "https://github.com/Microsoft/TypeScript-Node-Starter"
+    "url": "https://github.com/sydney900/CQRS-RS-Microservices/tree/master/TypescriptKafkaWebApi"
   },
   "author": "Bing Wang",
   "license": "MIT",

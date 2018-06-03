@@ -8,7 +8,7 @@ COPY ./TypescriptKafkaWebApi/src/ ./src/
 COPY ./TypescriptKafkaWebApi/.env.docker ./.env
 RUN npm run build
 
-FROM node:9-alpine as builder
+FROM node:9-alpine
 ENV NODE_ENV production
 RUN apk update && apk upgrade && apk add --no-cache bash git openssh
 WORKDIR /usr/src/app
