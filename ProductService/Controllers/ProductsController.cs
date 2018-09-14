@@ -38,7 +38,7 @@ namespace ProductService.Controllers
             _bus.Send(new CreateProductCommand(Guid.NewGuid(), name));
         }
 
-        [HttpPost]
+        [HttpPut]
         public void ChangeName(Guid id, string name, int version)
         {
             var command = new RenameProductCommand(id, name, version);
