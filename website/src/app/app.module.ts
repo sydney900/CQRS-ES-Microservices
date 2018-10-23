@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, APP_INITIALIZER} from '@angular/core';
 import { MaterialModule } from './mat.module';
 import { RouterModule, Routes  } from '@angular/router';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -10,6 +10,18 @@ import { ClientListComponent } from './clients/client-list/client-list.component
 import { CreateClientComponent } from './clients/create-client/create-client.component';
 import { PageNotFoundComponent } from './common/page-not-found/page-not-found.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import {
+  AuthModule,
+  OidcSecurityService,
+  OpenIDImplicitFlowConfiguration,
+  OidcConfigService,
+  AuthWellKnownEndpoints
+} from 'angular-auth-oidc-client';
+
+export function loadConfig(configService: AppConfigService) {
+  console.log('APP_INITIALIZER STARTING');
+  return () => configService.getConfig();
+}
 
 
 const appRoutes: Routes = [
@@ -36,12 +48,20 @@ const appRoutes: Routes = [
     FormsModule,
     ReactiveFormsModule,
     MaterialModule,
-	HttpClientModule,
+	  HttpClientModule,
     RouterModule.forRoot(
       appRoutes,
     )
   ],
-  providers: [],
+  providers: [
+    OidcConfigService,
+    {
+        provide: APP_INITIALIZER,
+        useFactory: loadConfig,
+        deps: [OidcConfigService],
+        multi: true,
+    },
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,4 +1,6 @@
 {
   "kafkaClientCreatedUrl": "http://localhost:3000/clientCreated",
-  "kafkaSendCommandUrl": "http://localhost:3000/command"
+  "kafkaSendCommandUrl": "http://localhost:3000/command",
+  "ssoAddress": "http://localhost:5000",
+  "ssoClientId": "ro.client"
 }

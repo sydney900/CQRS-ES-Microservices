@@ -22,7 +22,14 @@ export class AppConfigService {
     }
 
     if (!this.appConfig) {
-      return await this.http.get<Config>(this.configUrl).toPromise().then(x => this.appConfig = x);
+      return await this.http.get<Config>(this.configUrl).toPromise().then(x => {
+        this.appConfig = x;
+        
+        // load SSo config 
+        this.http.get<any>(this.appConfig.ssoUrl).subscribe();
+
+        //then setup SSO
+      });
     }
 
     return this.appConfig;
