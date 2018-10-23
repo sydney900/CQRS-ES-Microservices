@@ -59,6 +59,10 @@ Project("{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}") = "website", "..\website.njspr
 EndProject
 Project("{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}") = "TypescriptKafkaWebApi", "..\TypescriptKafkaWebApi.njsproj", "{43AB478C-12D2-4614-892C-1FFACA70A70B}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AuthServer", "AuthServer\AuthServer.csproj", "{4D3945C5-C731-4B45-A2E4-4A6CA0D8175C}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SecurityShare", "SecurityShare\SecurityShare.csproj", "{76183410-EC71-4C93-89A6-E020C92BF763}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -125,6 +129,14 @@ Global
 		{43AB478C-12D2-4614-892C-1FFACA70A70B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{43AB478C-12D2-4614-892C-1FFACA70A70B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{43AB478C-12D2-4614-892C-1FFACA70A70B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4D3945C5-C731-4B45-A2E4-4A6CA0D8175C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4D3945C5-C731-4B45-A2E4-4A6CA0D8175C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4D3945C5-C731-4B45-A2E4-4A6CA0D8175C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4D3945C5-C731-4B45-A2E4-4A6CA0D8175C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{76183410-EC71-4C93-89A6-E020C92BF763}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{76183410-EC71-4C93-89A6-E020C92BF763}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{76183410-EC71-4C93-89A6-E020C92BF763}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{76183410-EC71-4C93-89A6-E020C92BF763}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

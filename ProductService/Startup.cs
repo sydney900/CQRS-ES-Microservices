@@ -1,4 +1,5 @@
-﻿using CQRS.Core;
+﻿using Common;
+using CQRS.Core;
 using CQRS.Domain;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -20,9 +21,20 @@ namespace ProductService
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors(options =>
+            {
+                options.AddPolicy("CorsPolicy",
+                    builder => builder.AllowAnyOrigin()
+                    .AllowAnyMethod()
+                    .AllowAnyHeader()
+                    .AllowCredentials());
+            });
+
             services.AddSingleton<InProcessBus>(ProductInProcessBusFactory.Create());
             services.AddSingleton<IProductReadModel, ProductReadModel>();
-            
+
+            SetupToUseIndentityServer.SetupWebApiUseIdentityServer(services, Configuration);
+
             services.AddMvc();
 
             // Register the Swagger generator, defining 1 or more Swagger documents
@@ -60,6 +72,7 @@ namespace ProductService
                 c.SwaggerEndpoint("/docs/v1/swagger.json", "Product Service V1");
             });
 
+            app.UseAuthentication();
             app.UseMvc();
         }
     }

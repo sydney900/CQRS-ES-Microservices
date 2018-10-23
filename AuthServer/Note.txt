@@ -1,0 +1,3 @@
+﻿OpenSSL-Win64
+openssl req –newkey rsa:2048 –nodes –keyout CqrsMicroservices.key –x509 –days 3650 –out CqrsMicroservices.cer
+openssl pkcs12 –export –in CqrsMicroservices.cer –inkey CqrsMicroservices.key –out CqrsMicroservices.pfx

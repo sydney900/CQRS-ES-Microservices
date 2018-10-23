@@ -4,10 +4,12 @@ using System.Linq;
 using System.Threading.Tasks;
 using CQRS.Core;
 using CQRS.Domain;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ProductService.Controllers
 {
+    [Authorize]
     [Route("")]
     public class ProductsController : Controller
     {

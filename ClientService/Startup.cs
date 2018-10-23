@@ -1,4 +1,5 @@
-﻿using CQRS.Core;
+﻿using Common;
+using CQRS.Core;
 using CQRS.Domain;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -38,11 +39,14 @@ namespace ClientService
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
+           SetupToUseIndentityServer.SetupWebApiUseIdentityServer(services, Configuration);
+
             // Register the Swagger generator, defining 1 or more Swagger documents
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", 
-                    new Info {
+                c.SwaggerDoc("v1",
+                    new Info
+                    {
                         Title = "Client Service API",
                         Version = "v1",
                         Description = @"A demo service for microsservice
@@ -86,7 +90,7 @@ Provide APIs of the creation, update and deletion of all clients.
                 c.SwaggerEndpoint("/docs/v1/swagger.json", "Client Service V1");
             });
 
-
+            app.UseAuthentication();
             app.UseMvc();
         }
     }

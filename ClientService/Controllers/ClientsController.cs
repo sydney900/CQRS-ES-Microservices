@@ -4,10 +4,12 @@ using System.Linq;
 using System.Threading.Tasks;
 using CQRS.Core;
 using CQRS.Domain;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ClientService.Controllers
 {
+    [Authorize]
     [Route("")]
     public class ClientsController : Controller
     {

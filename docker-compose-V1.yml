@@ -9,6 +9,18 @@ services:
     ports: 
       - "64000:80"
 
+  authserver:
+    image: authserver
+    build:
+      context: .
+      dockerfile: AuthServer/Dockerfile
+    ports: 
+      - "6499:80"
+    environment: 
+      CLIENTID: "ro.client"
+      CLIENTSECRETS: "8FEA01FC-5D0C-4285-9E69-27C04D53D7D2"
+
+
   clientservice:
     image: clientservice
     build:
