@@ -1,3 +1,7 @@
 ﻿OpenSSL-Win64
+
 openssl req –newkey rsa:2048 –nodes –keyout CqrsMicroservices.key –x509 –days 3650 –out CqrsMicroservices.cer
 openssl pkcs12 –export –in CqrsMicroservices.cer –inkey CqrsMicroservices.key –out CqrsMicroservices.pfx
+
+openssl req –newkey rsa:2048 –nodes –keyout sydeny900.key –x509 –days 3650 –out sydeny900.cer
+openssl pkcs12 –export –in sydeny900.cer –inkey sydeny900.key –out sydeny900.pfx

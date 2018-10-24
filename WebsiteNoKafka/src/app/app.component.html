@@ -1,0 +1,20 @@
+
+<mat-toolbar>
+  <mat-toolbar-row>
+    <button type="button" routerLink='' mat-button color="primary">
+      <mat-icon>account_circle</mat-icon>Access Client Service
+    </button>
+  </mat-toolbar-row>
+</mat-toolbar>
+<mat-sidenav-container class="example-container">
+  <mat-sidenav #drawer mode="side" opened role="navigation">
+    <mat-nav-list *ngIf="isLoggedIn" >
+      <a mat-list-item routerLink=''>Payment</a>
+      <a mat-list-item routerLink='about'>About</a>
+      <a mat-list-item (click)="authService.logout()">Logout {{authService.currentUser.name}}</a>
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>

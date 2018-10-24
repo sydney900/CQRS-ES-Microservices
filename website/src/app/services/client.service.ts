@@ -2,10 +2,9 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map, take, catchError } from 'rxjs/operators';
-
 import { Client } from '../models/client';
+import { Config } from '../models/config';
 import { AppConfigService } from './app-config.service';
-import { Config } from 'protractor';
 
 
 @Injectable({

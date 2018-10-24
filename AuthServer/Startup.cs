@@ -63,15 +63,8 @@ namespace AuthServer
             }
             else
             {
-                builder.AddSigningCredential(new X509Certificate2(Path.Combine(".", "CqrsMicroservices.pfx"), "wb@69272"));
+                builder.AddSigningCredential(new X509Certificate2(Path.Combine(".", "sydney900.pfx"), "Sydney900"));
             }
-
-            services.AddAuthentication()
-                .AddGoogle(options =>
-                {
-                    options.ClientId = "708996912208-9m4dkjb5hscn7cjrn5u0r4tbgkbj1fko.apps.googleusercontent.com";
-                    options.ClientSecret = "wdfPY6t8H8cecgjlxud__4Gh";
-                });
         }
 
         public void Configure(IApplicationBuilder app, ILoggerFactory loggerFactory)

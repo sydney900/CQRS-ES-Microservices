@@ -1,0 +1,6 @@
+{
+  "logUrl": "http://localhost:5001",
+  "apiGatewayhUrl": "http://localhost:64003/",
+  "authUrl": "http://localhost:5000",
+  "clientId":  "spa"
+}
