@@ -22,8 +22,9 @@ namespace AuthServer
         {
             return new ApiResource[]
             {
-                new ApiResource("ClientServiceApi", "Client service API"),
-                new ApiResource("ProductServiceApi", "Product service API")
+                new ApiResource("client.service.api", "Client service API"),
+                new ApiResource("product.service.api", "Product service API"),
+                new ApiResource("api1", "API1")
             };
         }
 
@@ -40,7 +41,7 @@ namespace AuthServer
                     AllowedGrantTypes = GrantTypes.ClientCredentials,
                     ClientSecrets = { new Secret("511536EF-F270-4058-80CA-1C89C192F69A".Sha256()) },
 
-                    AllowedScopes = { "ClientServiceApi", "ProductServiceApi" }
+                    AllowedScopes = { "client.service.api", "product.service.api" }
                 },
 
                 // MVC client using hybrid flow
@@ -57,7 +58,7 @@ namespace AuthServer
                     PostLogoutRedirectUris = { "http://localhost:5001/signout-callback-oidc" },
 
                     AllowOfflineAccess = true,
-                    AllowedScopes = { "openid", "profile", "ClientServiceApi", "ProductServiceApi" }
+                    AllowedScopes = { "openid", "profile", "client.service.api", "product.service.api", "api1" }
                 },
 
                 // SPA client using implicit flow
@@ -65,36 +66,34 @@ namespace AuthServer
                 {
                     ClientId = "spa",
                     ClientName = "SPA Client",
-                    ClientUri = "http://identityserver.io",
 
                     AllowedGrantTypes = GrantTypes.Implicit,
                     AllowAccessTokensViaBrowser = true,
 
                     RedirectUris =
                     {
-                        "http://localhost:5002/index.html",
-                        "http://localhost:5002/callback.html",
-                        "http://localhost:5002/silent.html",
-                        "http://localhost:5002/popup.html",
+                        "http://localhost:64003",
                     },
 
-                    PostLogoutRedirectUris = { "http://localhost:5002/index.html" },
-                    AllowedCorsOrigins = { "http://localhost:5002" },
+                    PostLogoutRedirectUris = { "http://localhost:64003" },
+                    AllowedCorsOrigins = { "http://localhost:64003" },
 
-                    AllowedScopes = { "openid", "profile", "ClientServiceApi", "ProductServiceApi" }
+                    AllowedScopes = { "openid", "profile", "client.service.api", "product.service.api" }
                 },
 
                 // resource owner password grant client
                 new Client
                 {
                     ClientId = "ro.client",
+                    ClientName = "Resource Owner Client",
+
                     AllowedGrantTypes = GrantTypes.ResourceOwnerPassword,
 
                     ClientSecrets =
                     {
                         new Secret("8FEA01FC-5D0C-4285-9E69-27C04D53D7D2".Sha256())
                     },
-                    AllowedScopes = { "ClientServiceApi", "ProductServiceApi" }
+                    AllowedScopes = { "openid", "profile", "client.service.api", "product.service.api", "api1" }
                 }
 
             };

@@ -5,14 +5,15 @@ import { DataService } from './data.service';
 import { HttpClient } from '@angular/common/http';
 import { LogService } from './log.service';
 import { Client } from '../models/client';
-import { AppConfigService } from './app-config.service';
+import { AppConfigService } from '../app-config/app-config.service';
+import { OidcSecurityService } from 'angular-auth-oidc-client';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ClientService extends DataService<Client> {
-  constructor(http: HttpClient, log: LogService, configService: AppConfigService) {
-    super(configService.appConfig.apiGatewayhUrl, http, log, Client);
+  constructor(http: HttpClient, log: LogService, configService: AppConfigService, oidcSecurityService: OidcSecurityService) {
+    super(configService.appConfig.apiGatewayhUrl + '/clients', http, log, oidcSecurityService, Client);
   }
 
 }

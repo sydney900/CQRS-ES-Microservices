@@ -9,6 +9,7 @@ export class AppConfigService {
 
   private configUrl: string;
   private appConfig: Config;
+  private wellKnownEndpoints: any;
 
 
   constructor(private http: HttpClient) {
@@ -22,14 +23,14 @@ export class AppConfigService {
     }
 
     if (!this.appConfig) {
-      return await this.http.get<Config>(this.configUrl).toPromise().then(x => {
-        this.appConfig = x;
+      this.appConfig = await this.http.get<Config>(this.configUrl).toPromise();
         
-        // load SSo config 
-        this.http.get<any>(this.appConfig.ssoUrl).subscribe();
+      // load SSo config 
+      if (!this.wellKnownEndpoints) {
+        this.wellKnownEndpoints = await this.http.get<any>(`${this.appConfig.ssoUrl}/.well-known/openid-configuration`).toPromise();
+      }
 
-        //then setup SSO
-      });
+      //then setup SSO
     }
 
     return this.appConfig;

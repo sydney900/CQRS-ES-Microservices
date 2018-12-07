@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { Client } from '../../models/client';
+import { ClientService } from 'src/app/services/client.service';
 
 @Component({
   selector: 'app-create-client',
@@ -12,11 +13,11 @@ export class CreateClientComponent implements OnInit {
   clientForm: FormGroup;
   client: Client;
 
-  constructor(private fb: FormBuilder) { }
+  constructor(private fb: FormBuilder, private clientService: ClientService) { }
 
   ngOnInit() {
 
-    this.client = new Client("", "");
+    this.client = new Client();
 
     this.clientForm = new FormGroup({
       clientName: new FormControl("", {
@@ -40,5 +41,6 @@ export class CreateClientComponent implements OnInit {
   }
 
   onSubmit(fClient) {
+    this.clientService.create(fClient);
   }
 }

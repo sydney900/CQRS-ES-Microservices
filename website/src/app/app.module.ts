@@ -17,6 +17,7 @@ import {
   OidcConfigService,
   AuthWellKnownEndpoints
 } from 'angular-auth-oidc-client';
+import { AppConfigService } from './services/app-config.service';
 
 export function loadConfig(configService: AppConfigService) {
   console.log('APP_INITIALIZER STARTING');

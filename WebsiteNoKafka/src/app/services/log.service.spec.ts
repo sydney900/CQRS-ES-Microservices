@@ -37,12 +37,12 @@ describe('LogService', () => {
   });
 
   it('Create service should raise error if no envirement varibale LOG_URL', () => {
-    const saveValue = environment.LOGURL;
+    const saveValue = environment.LOG_URL;
 
-    environment.LOGURL = undefined;
+    environment.LOG_URL = undefined;
     expect(() => new LogService(new HttpClient(null), console)).toThrow(new Error('The envirement varibale LOG_URL should be provided'));
 
-    environment.LOGURL = saveValue;
+    environment.LOG_URL = saveValue;
   });
 
   it('log function should call the log function of LocalLogService', () => {

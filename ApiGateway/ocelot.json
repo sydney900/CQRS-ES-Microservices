@@ -5,8 +5,8 @@
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "clientservice",
-          "Port": 80
+            "Host": "localhost",
+            "Port": 64001
         }
       ],
       "UpstreamPathTemplate": "/clients",
@@ -17,8 +17,8 @@
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "clientservice",
-          "Port": 80
+            "Host": "localhost",
+            "Port": 64001
         }
       ],
       "UpstreamPathTemplate": "/clients/{any}",
@@ -29,8 +29,8 @@
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "productservice",
-          "Port": 80
+            "Host": "localhost",
+            "Port": 64002
         }
       ],
       "UpstreamPathTemplate": "/products",
@@ -41,8 +41,8 @@
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "productservice",
-          "Port": 80
+            "Host": "localhost",
+            "Port": 64002
         }
       ],
       "UpstreamPathTemplate": "/products/{any}",

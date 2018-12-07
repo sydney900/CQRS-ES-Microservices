@@ -19,12 +19,13 @@ export class AppConfigService {
   }
 
   async getConfig() {
-    if (!this.appConfig && process.env.LOG_URL && process.env.APIGATEWAY_URL && process.env.AUTH_URL) {
+    if (!this.appConfig && process.env.LOG_URL && process.env.APIGATEWAY_URL && process.env.AUTH_URL && process.env.SCOPE) {
       this.appConfig = {
         apiGatewayhUrl: process.env.APIGATEWAY_URL,
         authUrl: process.env.AUTH_URL,
         logUrl: process.env.LOG_URL,
-        clientId: process.env.CLIENTID
+        clientId: process.env.CLIENTID,
+        scope: process.env.SCOPE
       }
     }
 

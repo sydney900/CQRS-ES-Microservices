@@ -17,7 +17,7 @@ export const getClientCreated = () => {
     console.log("handle getClientCreated");
     comsumer.consume().subscribe((value: any) => {
       res.write(value);
-    }, (err) => {
+    }, (err: any) => {
       return next(err);
     }, () => {
       res.write("completed");

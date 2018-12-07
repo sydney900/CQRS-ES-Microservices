@@ -1,4 +1,4 @@
-version: '3.4'
+version: '3.0'
 
 services:
   apigateway:
@@ -16,10 +16,6 @@ services:
       dockerfile: AuthServer/Dockerfile
     ports: 
       - "5000:80"
-    environment:
-      CLIENTID: "ro.client"
-      CLIENTSECRETS: "8FEA01FC-5D0C-4285-9E69-27C04D53D7D2"
-      IDENTITYSERVERURL: "http://authserver:5000"
 
   clientservice:
     image: clientservice
@@ -28,6 +24,10 @@ services:
       dockerfile: ClientService/Dockerfile
     ports: 
       - "64001:80"
+    environment: 
+      CLIENTID: "ro.client"
+      CLIENTSECRETS: "8FEA01FC-5D0C-4285-9E69-27C04D53D7D2"
+      IDENTITYSERVERURL: "http://authserver:5000"
 
   productservice:
     image: productservice
@@ -40,3 +40,17 @@ services:
       CLIENTID: "ro.client"
       CLIENTSECRETS: "8FEA01FC-5D0C-4285-9E69-27C04D53D7D2"
       IDENTITYSERVERURL: "http://authserver:5000"
+
+  websitenokafka:
+    image: websitenokafka
+    build:
+      context: WebsiteNoKafka
+      dockerfile: Dockerfile
+    ports: 
+      - "64003:80"
+      - "64443:443"
+    environment: 
+      APIGATEWAY_URL: "apigateway:64000"
+      AUTH_URL: "http://authserver:5000"
+      LOG_URL: ""
+      CLIENTID: "spa"

@@ -3,12 +3,11 @@ WORKDIR /app
 EXPOSE 80
 
 FROM microsoft/dotnet:2.1-sdk AS build
-WORKDIR /src
-COPY CqrsMicroservices.sln ./
-COPY ApiGateway/ApiGateway.csproj ApiGateway/
-RUN dotnet restore -nowarn:msb3202,nu1503
-COPY . .
 WORKDIR /src/ApiGateway
+COPY ApiGateway/ApiGateway.csproj .
+COPY ApiGateway/. .
+COPY ApiGateway/ocelot.docker.json ./ocelot.json
+RUN dotnet restore -nowarn:msb3202,nu1503
 RUN dotnet build -c Release -o /app
 
 FROM build AS publish

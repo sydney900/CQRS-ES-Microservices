@@ -14,9 +14,7 @@ export class ClientService {
   private appConfig: Config;
 
   constructor(private configService: AppConfigService, private http: HttpClient) {
-    configService.getConfig().then(config => {
-      this.appConfig = config;
-    });
+    configService.getConfig().then(config => { this.appConfig = config });
   }
 
   getClientCreated(): Observable<Client> {

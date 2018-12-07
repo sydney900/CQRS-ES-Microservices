@@ -3,4 +3,5 @@ export interface Config {
   apiGatewayhUrl: string;
   authUrl: string;
   clientId: string;
+  scope: string;
 }

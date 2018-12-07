@@ -5,7 +5,7 @@
         public string IdentityServerUrl { get; set; }
         public string ClientId { get; set; }
         public string ClientSecrets { get; set; }
-        public string[] Scopes { get; set; }
+        public string Scopes { get; set; }
         public string SignInScheme { get; set; }
         public string AuthenticationScheme { get; set; }
         public string ApiName { get; set; }

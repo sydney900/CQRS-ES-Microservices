@@ -1,12 +1,12 @@
-FROM microsoft/dotnet:2.1-aspnetcore-runtime AS base
+FROM microsoft/aspnetcore:2.0 AS base
 WORKDIR /app
 EXPOSE 80
 
-FROM microsoft/dotnet:2.1-sdk AS build
+FROM microsoft/aspnetcore-build:2.0 AS build
 WORKDIR /src
 COPY ["AuthServer/AuthServer.csproj", "AuthServer/"]
 RUN dotnet restore "AuthServer/AuthServer.csproj"
-COPY . .
+COPY AuthServer/. AuthServer/.
 WORKDIR "/src/AuthServer"
 RUN dotnet build "AuthServer.csproj" -c Release -o /app
 
@@ -16,4 +16,4 @@ RUN dotnet publish "AuthServer.csproj" -c Release -o /app
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app .
-ENTRYPOINT ["dotnet", "AuthServer.dll"]
+ENTRYPOINT ["dotnet", "AuthServer.dll", "/seed"]

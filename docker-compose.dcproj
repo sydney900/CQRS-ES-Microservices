@@ -11,6 +11,8 @@
   <ItemGroup>
     <None Include="docker-compose.yml" />
     <None Include="docker-compose-V1.yml" />
+    <None Include="docker-compose.override.yml" />
+    <None Include="docker-compose_V1.override.yml" />
     <None Include="docker-compose_V2.override.yml">
       <DependentUpon>docker-compose_V2.yml</DependentUpon>
     </None>

@@ -55,32 +55,9 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "JavascriptClient", "Javascr
 EndProject
 Project("{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}") = "NodejsClient", "NodejsClient\NodejsClient.njsproj", "{B8B8771E-D7A8-4FEC-BD06-5BA8A4B07475}"
 EndProject
-Project("{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}") = "TypescriptKafkaWebApi", "..\TypescriptKafkaWebApi.njsproj", "{43AB478C-12D2-4614-892C-1FFACA70A70B}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AuthServer", "AuthServer\AuthServer.csproj", "{4D3945C5-C731-4B45-A2E4-4A6CA0D8175C}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SecurityShare", "SecurityShare\SecurityShare.csproj", "{76183410-EC71-4C93-89A6-E020C92BF763}"
-EndProject
-Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "WebsiteNoKafka", "WebsiteNoKafka\", "{FF6AF193-8512-4B89-AEF2-B9857705E719}"
-	ProjectSection(WebsiteProperties) = preProject
-		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.0"
-		Debug.AspNetCompiler.VirtualPath = "/localhost_49262"
-		Debug.AspNetCompiler.PhysicalPath = "WebsiteNoKafka\"
-		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_49262\"
-		Debug.AspNetCompiler.Updateable = "true"
-		Debug.AspNetCompiler.ForceOverwrite = "true"
-		Debug.AspNetCompiler.FixedNames = "false"
-		Debug.AspNetCompiler.Debug = "True"
-		Release.AspNetCompiler.VirtualPath = "/localhost_49262"
-		Release.AspNetCompiler.PhysicalPath = "WebsiteNoKafka\"
-		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_49262\"
-		Release.AspNetCompiler.Updateable = "true"
-		Release.AspNetCompiler.ForceOverwrite = "true"
-		Release.AspNetCompiler.FixedNames = "false"
-		Release.AspNetCompiler.Debug = "False"
-		VWDPort = "49262"
-		SlnRelativePath = "WebsiteNoKafka\"
-	EndProjectSection
 EndProject
 Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "website", "website\", "{ACCECED2-19C8-4E42-8490-7DEA7F53206A}"
 	ProjectSection(WebsiteProperties) = preProject
@@ -102,6 +79,10 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "website", "website\", "{ACC
 		VWDPort = "49502"
 		SlnRelativePath = "website\"
 	EndProjectSection
+EndProject
+Project("{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}") = "TypescriptKafkaWebApi", "TypescriptKafkaWebApi\TypescriptKafkaWebApi.njsproj", "{73F6F16D-5412-45BB-876C-82C24B0C549F}"
+EndProject
+Project("{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}") = "WebsiteNoKafka", "WebsiteNoKafka\WebsiteNoKafka.njsproj", "{6DE7D049-3E72-42B6-B6D8-FD0453CF170B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -161,10 +142,6 @@ Global
 		{B8B8771E-D7A8-4FEC-BD06-5BA8A4B07475}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B8B8771E-D7A8-4FEC-BD06-5BA8A4B07475}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B8B8771E-D7A8-4FEC-BD06-5BA8A4B07475}.Release|Any CPU.Build.0 = Release|Any CPU
-		{43AB478C-12D2-4614-892C-1FFACA70A70B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{43AB478C-12D2-4614-892C-1FFACA70A70B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{43AB478C-12D2-4614-892C-1FFACA70A70B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{43AB478C-12D2-4614-892C-1FFACA70A70B}.Release|Any CPU.Build.0 = Release|Any CPU
 		{4D3945C5-C731-4B45-A2E4-4A6CA0D8175C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{4D3945C5-C731-4B45-A2E4-4A6CA0D8175C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4D3945C5-C731-4B45-A2E4-4A6CA0D8175C}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -173,14 +150,18 @@ Global
 		{76183410-EC71-4C93-89A6-E020C92BF763}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{76183410-EC71-4C93-89A6-E020C92BF763}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{76183410-EC71-4C93-89A6-E020C92BF763}.Release|Any CPU.Build.0 = Release|Any CPU
-		{FF6AF193-8512-4B89-AEF2-B9857705E719}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{FF6AF193-8512-4B89-AEF2-B9857705E719}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{FF6AF193-8512-4B89-AEF2-B9857705E719}.Release|Any CPU.ActiveCfg = Debug|Any CPU
-		{FF6AF193-8512-4B89-AEF2-B9857705E719}.Release|Any CPU.Build.0 = Debug|Any CPU
 		{ACCECED2-19C8-4E42-8490-7DEA7F53206A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{ACCECED2-19C8-4E42-8490-7DEA7F53206A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ACCECED2-19C8-4E42-8490-7DEA7F53206A}.Release|Any CPU.ActiveCfg = Debug|Any CPU
 		{ACCECED2-19C8-4E42-8490-7DEA7F53206A}.Release|Any CPU.Build.0 = Debug|Any CPU
+		{73F6F16D-5412-45BB-876C-82C24B0C549F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{73F6F16D-5412-45BB-876C-82C24B0C549F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{73F6F16D-5412-45BB-876C-82C24B0C549F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{73F6F16D-5412-45BB-876C-82C24B0C549F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6DE7D049-3E72-42B6-B6D8-FD0453CF170B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6DE7D049-3E72-42B6-B6D8-FD0453CF170B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6DE7D049-3E72-42B6-B6D8-FD0453CF170B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6DE7D049-3E72-42B6-B6D8-FD0453CF170B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

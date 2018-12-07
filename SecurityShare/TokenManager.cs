@@ -36,7 +36,7 @@ namespace Common
 
                 // request token
                 var tokenClient = new TokenClient(disco.TokenEndpoint, identitySetting.ClientId, identitySetting.ClientSecrets);
-                var tokenResponse = await tokenClient.RequestClientCredentialsAsync("api1");
+                var tokenResponse = await tokenClient.RequestClientCredentialsAsync(identitySetting.Scopes);
 
                 if (tokenResponse.IsError)
                 {
@@ -67,7 +67,7 @@ namespace Common
 
                 // request token
                 var tokenClient = new TokenClient(disco.TokenEndpoint, identitySetting.ClientId, identitySetting.ClientSecrets);
-                var tokenResponse = await tokenClient.RequestResourceOwnerPasswordAsync(userName, password, "api1");
+                var tokenResponse = await tokenClient.RequestResourceOwnerPasswordAsync(userName, password, identitySetting.Scopes);
 
                 if (tokenResponse.IsError)
                 {

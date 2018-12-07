@@ -3,5 +3,9 @@
 openssl req –newkey rsa:2048 –nodes –keyout CqrsMicroservices.key –x509 –days 3650 –out CqrsMicroservices.cer
 openssl pkcs12 –export –in CqrsMicroservices.cer –inkey CqrsMicroservices.key –out CqrsMicroservices.pfx
 
-openssl req –newkey rsa:2048 –nodes –keyout sydeny900.key –x509 –days 3650 –out sydeny900.cer
-openssl pkcs12 –export –in sydeny900.cer –inkey sydeny900.key –out sydeny900.pfx
+openssl req –newkey rsa:2048 –nodes –keyout sydney900.key –x509 –days 3650 –out sydney900.cer
+openssl pkcs12 –export –in sydney900.cer –inkey sydney900.key –out sydney900.pfx
+
+
+.\openssl pkcs12 -in .\sydney900.pfx -out .\sydney900.pem
+.\openssl pkcs12 -in .\sydney900.pfx -nocerts -nodes -out .\sydney900.rsa

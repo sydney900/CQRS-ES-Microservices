@@ -20,7 +20,8 @@
             "tsConfig": "src/tsconfig.app.json",
             "assets": [
               "src/favicon.ico",
-              "src/assets"
+              "src/assets",
+              "src/silent-renew.html"
             ],
             "styles": [
               "src/styles.css"
@@ -118,5 +119,5 @@
       }
     }
   },
-  "defaultProject": "website"
+  "defaultProject": "WebsiteNoKafka"
 }

@@ -8,10 +8,11 @@
 </mat-toolbar>
 <mat-sidenav-container class="example-container">
   <mat-sidenav #drawer mode="side" opened role="navigation">
-    <mat-nav-list *ngIf="isLoggedIn" >
-      <a mat-list-item routerLink=''>Payment</a>
-      <a mat-list-item routerLink='about'>About</a>
-      <a mat-list-item (click)="authService.logout()">Logout {{authService.currentUser.name}}</a>
+    <mat-nav-list>
+      <a mat-list-item routerLink='' *ngIf="isAuthorized">Clients</a>
+      <a mat-list-item routerLink='about' *ngIf="isAuthorized">About</a>
+      <a mat-list-item (click)="logout()" *ngIf="isAuthorized">Logout</a>
+      <a mat-list-item (click)="login()" *ngIf="!isAuthorized">Login</a>
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>

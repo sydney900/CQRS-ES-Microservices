@@ -37,6 +37,7 @@ namespace AuthServer
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
 
+            services.AddCors();
             services.AddMvc();
 
             services.Configure<IISOptions>(iis =>
@@ -57,14 +58,15 @@ namespace AuthServer
                 .AddInMemoryClients(Config.GetClients())
                 .AddAspNetIdentity<ApplicationUser>();
 
-            if (Environment.IsDevelopment())
-            {
-                builder.AddDeveloperSigningCredential();
-            }
-            else
-            {
-                builder.AddSigningCredential(new X509Certificate2(Path.Combine(".", "sydney900.pfx"), "Sydney900"));
-            }
+            builder.AddSigningCredential(new X509Certificate2(Path.Combine(".", "sydney900.pfx"), "Sydney900"));
+            //if (Environment.IsDevelopment())
+            //{
+            //    builder.AddDeveloperSigningCredential();
+            //}
+            //else
+            //{
+            //    builder.AddSigningCredential(new X509Certificate2(Path.Combine(".", "sydney900.pfx"), "Sydney900"));
+            //}
         }
 
         public void Configure(IApplicationBuilder app, ILoggerFactory loggerFactory)
@@ -80,6 +82,12 @@ namespace AuthServer
             }
 
             loggerFactory.AddConsole(LogLevel.Trace);
+
+            app.UseCors(builder => builder
+                  .AllowAnyOrigin()
+                  .AllowAnyHeader()
+                  .AllowAnyMethod());
+
 
             app.UseStaticFiles();
             app.UseIdentityServer();

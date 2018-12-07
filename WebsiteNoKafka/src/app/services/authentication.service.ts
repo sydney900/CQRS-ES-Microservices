@@ -5,7 +5,8 @@ import { environment } from '../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { LogService } from './log.service';
 import * as jwt_decode from 'jwt-decode';
-import { AppConfigService } from './app-config.service';
+import { AppConfigService } from '../app-config/app-config.service';
+import { OidcSecurityService } from 'angular-auth-oidc-client';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +15,7 @@ export class AuthenticationService {
   private url: string;
   private lsKey = 'currentUser';
 
-  constructor(private httpClient: HttpClient, log: LogService, configService: AppConfigService) {
+  constructor(private httpClient: HttpClient, private log: LogService, configService: AppConfigService) {
     configService.getConfig().then(config => {
       this.url = config.authUrl;
     });
@@ -39,7 +40,7 @@ export class AuthenticationService {
   }
 
   isLoggedIn(): boolean {
-    const user = this.currentUser;
+      const user = this.currentUser;
     if (user) {
       const expireDate: Date = user.exp;
       return !expireDate || (expireDate && expireDate > new Date());
