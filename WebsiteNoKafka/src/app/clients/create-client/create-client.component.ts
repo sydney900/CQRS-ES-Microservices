@@ -20,7 +20,7 @@ export class CreateClientComponent implements OnInit {
     this.client = new Client();
 
     this.clientForm = new FormGroup({
-      clientName: new FormControl("", {
+      name: new FormControl("", {
         validators: Validators.required,
         updateOn: 'submit'
       }),
@@ -35,7 +35,7 @@ export class CreateClientComponent implements OnInit {
     });
 
     this.clientForm.valueChanges.subscribe(f => {
-      this.client.clientName = f.clientName;
+      this.client.name = f.name;
       this.client.email = f.email;
     });
   }

@@ -8,7 +8,7 @@ namespace CQRS.Domain
         public string Name { get; set; }
         public int Version { get; set; }
 
-        public ClientDetailDto(Guid id, string name, int version)
+        public ClientDetailDto(Guid id, string name, int version = 1)
         {
             Id = id;
             Name = name;

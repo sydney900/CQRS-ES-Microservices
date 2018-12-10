@@ -83,7 +83,6 @@
     <TypeScriptCompile Include="src\app\models\ilog.ts" />
     <TypeScriptCompile Include="src\app\models\iLogitem.ts" />
     <TypeScriptCompile Include="src\app\models\iResource.ts" />
-    <TypeScriptCompile Include="src\app\models\payment.ts" />
     <TypeScriptCompile Include="src\app\services\auth-guard.service.spec.ts" />
     <TypeScriptCompile Include="src\app\services\auth-guard.service.ts" />
     <TypeScriptCompile Include="src\app\services\authentication.service.spec.ts" />

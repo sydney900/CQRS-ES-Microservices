@@ -54,9 +54,9 @@ namespace ClientService.Controllers
         /// </summary>
         /// <param name="name"></param>
         [HttpPost]
-        public void Post(string name)
+        public void Post(ClientDetailDto client)
         {
-            _bus.Send(new CreateClientCommand(Guid.NewGuid(), name));
+            _bus.Send(new CreateClientCommand(Guid.NewGuid(), client.Name));
         }
 
         /// <summary>

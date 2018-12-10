@@ -1,3 +1,3 @@
 export interface IResource {
-    id: number;
+    id: string;
 }

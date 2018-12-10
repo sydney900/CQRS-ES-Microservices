@@ -1,8 +1,8 @@
 <form  class="clientform" [formGroup]="clientForm" (ngSubmit)="onSubmit(clientForm.value)">
 
   <mat-form-field>
-    <input matInput placeholder="Client Name" formControlName="clientName">
-    <mat-error *ngIf="clientForm.get('clientName')?.invalid">Client name is required</mat-error>
+    <input matInput placeholder="Client Name" formControlName="name">
+    <mat-error *ngIf="clientForm.get('name')?.invalid">Client name is required</mat-error>
   </mat-form-field>
 
   <mat-form-field>

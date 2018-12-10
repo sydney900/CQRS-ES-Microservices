@@ -1,7 +1,8 @@
 import { IResource } from "./iResource";
 
 export class Client implements IResource {
-  public id: number;
-  public clientName: string;
+  public id: string;
+  public name: string;
   public email: string;
+  public version: number = 1;
 }
