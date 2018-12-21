@@ -1,7 +1,7 @@
 {
-  "logUrl": "http://localhost:5001",
-  "apiGatewayhUrl": "http://localhost:64000",
-  "authUrl": "http://localhost:5000",
+  "logUrl": "http://10.0.75.1:5001",
+  "apiGatewayhUrl": "http://10.0.75.1:64000",
+  "authUrl": "http://10.0.75.1:5000",
   "clientId": "spa",
   "scope": "openid profile client.service.api product.service.api"
 }

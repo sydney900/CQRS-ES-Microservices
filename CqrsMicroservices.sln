@@ -18,6 +18,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{7793D7DB-D49F-47C2-B044-16457B537CDD}"
 	ProjectSection(SolutionItems) = preProject
 		README.md = README.md
+		RunDockerCompose.ps1 = RunDockerCompose.ps1
 		Version1.png = Version1.png
 		Version2.png = Version2.png
 	EndProjectSection
@@ -81,6 +82,8 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "website", "website\", "{ACC
 	EndProjectSection
 EndProject
 Project("{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}") = "TypescriptKafkaWebApi", "TypescriptKafkaWebApi\TypescriptKafkaWebApi.njsproj", "{73F6F16D-5412-45BB-876C-82C24B0C549F}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApiCommon", "WebApiCommon\WebApiCommon.csproj", "{788055B1-270A-4440-9C76-2333970E86B7}"
 EndProject
 Project("{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}") = "WebsiteNoKafka", "WebsiteNoKafka\WebsiteNoKafka.njsproj", "{6DE7D049-3E72-42B6-B6D8-FD0453CF170B}"
 EndProject
@@ -158,6 +161,10 @@ Global
 		{73F6F16D-5412-45BB-876C-82C24B0C549F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{73F6F16D-5412-45BB-876C-82C24B0C549F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{73F6F16D-5412-45BB-876C-82C24B0C549F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{788055B1-270A-4440-9C76-2333970E86B7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{788055B1-270A-4440-9C76-2333970E86B7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{788055B1-270A-4440-9C76-2333970E86B7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{788055B1-270A-4440-9C76-2333970E86B7}.Release|Any CPU.Build.0 = Release|Any CPU
 		{6DE7D049-3E72-42B6-B6D8-FD0453CF170B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{6DE7D049-3E72-42B6-B6D8-FD0453CF170B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6DE7D049-3E72-42B6-B6D8-FD0453CF170B}.Release|Any CPU.ActiveCfg = Release|Any CPU

@@ -2,6 +2,17 @@
 
 Open solution with Visual Studio 2017 and run in docker mode
 
+## How to run
+Open Windows Powershell then run command
+```
+.\RunDockerCompose.ps1
+```
+and then run command to get IP
+```
+.\RunDockerCompose.ps1
+```
+and then open URL: http://10.0.75.1:64003 in your browser
+
 ## Version 1
 ![alt text](https://github.com/sydney900/CQRS-RS-Microservices/blob/master/Version1.png "Version 1 Chart")
 

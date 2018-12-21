@@ -8,6 +8,8 @@ services:
       dockerfile: ApiGateway/Dockerfile
     ports: 
       - "64000:80"
+    environment: 
+      ASPNETCORE_ENVIRONMENT: Production
 
   authserver:
     image: authserver
@@ -16,7 +18,10 @@ services:
       dockerfile: AuthServer/Dockerfile
     ports: 
       - "5000:80"
-
+    environment: 
+      ASPNETCORE_ENVIRONMENT: Production
+      MYIP: ${MYIP}
+      
   clientservice:
     image: clientservice
     build:
@@ -27,7 +32,10 @@ services:
     environment: 
       CLIENTID: "ro.client"
       CLIENTSECRETS: "8FEA01FC-5D0C-4285-9E69-27C04D53D7D2"
-      IDENTITYSERVERURL: "http://authserver:5000"
+      IDENTITYSERVERURL: "http://${MYIP}:5000"
+      APINAME: "client.service.api"
+      APISECRET: "client.service.api.secret"
+      ASPNETCORE_ENVIRONMENT: Production
 
   productservice:
     image: productservice
@@ -39,7 +47,9 @@ services:
     environment: 
       CLIENTID: "ro.client"
       CLIENTSECRETS: "8FEA01FC-5D0C-4285-9E69-27C04D53D7D2"
-      IDENTITYSERVERURL: "http://authserver:5000"
+      IDENTITYSERVERURL: "http://${MYIP}:5000"
+      APINAME: "product.service.api"
+      ASPNETCORE_ENVIRONMENT: Production
 
   websitenokafka:
     image: websitenokafka
@@ -51,6 +61,7 @@ services:
       - "64443:443"
     environment: 
       APIGATEWAY_URL: "apigateway:64000"
-      AUTH_URL: "http://authserver:5000"
-      LOG_URL: ""
+      AUTH_URL: "http://${MYIP}:5000"
+      LOG_URL: "http://${MYIP}:5001"
       CLIENTID: "spa"
+      SCOPE: "openid profile client.service.api product.service.api"

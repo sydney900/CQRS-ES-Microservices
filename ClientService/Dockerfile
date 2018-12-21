@@ -1,3 +1,4 @@
+      
 FROM microsoft/dotnet:2.1-aspnetcore-runtime AS base
 WORKDIR /app
 EXPOSE 80
@@ -18,6 +19,12 @@ RUN dotnet build -c Release
 WORKDIR /src/SecurityShare
 COPY SecurityShare/SecurityShare.csproj .
 COPY SecurityShare/. .
+RUN dotnet restore -nowarn:msb3202,nu1503
+RUN dotnet build -c Release
+
+WORKDIR /src/WebApiCommon
+COPY WebApiCommon/WebApiCommon.csproj .
+COPY WebApiCommon/. .
 RUN dotnet restore -nowarn:msb3202,nu1503
 RUN dotnet build -c Release
 

@@ -6,19 +6,26 @@
 </div>
 
 <mat-list>
-  <mat-list-item *ngFor="let entry of clients | async ">
-    <i class="material-icons">person</i>
-    <div>
-      <h5 matLine>
-        {{entry.name}}
-      </h5>
-      <p matLine>
-        <span> {{entry.email}} </span>
-      </p>
+  <mat-list-item *ngFor="let entry of clients | async">
+    <div fxLayout="row" fxLayoutAlign="stretch center" fxLayoutGap="10px" class="full-width">
+      <div fxFlex="30px">
+        <i class="material-icons">person</i>
+      </div>
+
+      <div fxFlex>
+        <h5 matLine>
+          {{entry.name}}
+        </h5>
+        <p matLine>
+          <span> {{entry.email}} </span>
+        </p>
+      </div>
+      <div fxFlex="30px">
+        <button (click)="onDeleteClient(entry.id)" mat-icon-button>
+          <i class="material-icons">delete</i>
+        </button>
+      </div>
     </div>
-    <button (click)="onDeleteClient(entry.id)">
-      <i class="material-icons">delete</i>
-    </button>
   </mat-list-item>
 </mat-list>
 

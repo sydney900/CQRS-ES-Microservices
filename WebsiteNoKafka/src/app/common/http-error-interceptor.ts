@@ -36,7 +36,8 @@ export class HttpErrorInterceptor implements HttpInterceptor {
                                 // return Observable.throw(error.message);
                                 break;
                                 case UNAUTHORIZED:
-                                this.router.navigateByUrl('/login');
+                                //this.router.navigateByUrl('/login');
+                            this.router.navigate(['/#login']);
                                 break;
                             case FORBIDDEN:
                                 this.router.navigateByUrl('/unauthorized');

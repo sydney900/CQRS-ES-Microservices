@@ -30,6 +30,15 @@ namespace Common
             if (!string.IsNullOrEmpty(envIdentityServerUrl))
                 identitySetting.IdentityServerUrl = envIdentityServerUrl;
 
+            string apiSecret = Environment.GetEnvironmentVariable("APISECRET");
+            if (!string.IsNullOrEmpty(apiSecret))
+                identitySetting.ApiSecret = apiSecret;
+
+            string ApiName = Environment.GetEnvironmentVariable("APINAME");
+            if (!string.IsNullOrEmpty(ApiName))
+                identitySetting.ApiName = ApiName;
+
+
             return identitySetting;
         }
 
@@ -42,6 +51,7 @@ namespace Common
                     options.RequireHttpsMetadata = identitySetting.RequireHttpsMetadata;
 
                     options.ApiName = identitySetting.ApiName;
+                    options.ApiSecret = identitySetting.ApiSecret;
                 });
         }
     }

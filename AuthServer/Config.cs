@@ -15,6 +15,8 @@ namespace AuthServer
             {
                 new IdentityResources.OpenId(),
                 new IdentityResources.Profile(),
+                new IdentityResource("clientservicescope",new []{ "role", "admin", "user", "clientservice", "clientservice.admin", "clientservice.user" } ),
+                new IdentityResource("productservicescope",new []{ "role", "admin", "user", "productservice", "productservice.admin", "productservice.user" } ),
             };
         }
 
@@ -22,7 +24,12 @@ namespace AuthServer
         {
             return new ApiResource[]
             {
-                new ApiResource("client.service.api", "Client service API"),
+                new ApiResource("client.service.api", "Client service API") {
+                    ApiSecrets =
+                    {
+                        new Secret("client.service.api.secret".Sha256())
+                    },
+                },
                 new ApiResource("product.service.api", "Product service API"),
                 new ApiResource("api1", "API1")
             };
@@ -30,6 +37,10 @@ namespace AuthServer
 
         public static IEnumerable<Client> GetClients()
         {
+            string myLocalIp = System.Environment.GetEnvironmentVariable("MYIP");
+            if (string.IsNullOrEmpty(myLocalIp))
+                myLocalIp = "localhost";
+
             return new[]
             {
                 // client credentials flow client
@@ -53,9 +64,9 @@ namespace AuthServer
                     AllowedGrantTypes = GrantTypes.HybridAndClientCredentials,
                     ClientSecrets = { new Secret("49C1A7E1-0C79-4A89-A3D6-A37998FB86B0".Sha256()) },
 
-                    RedirectUris = { "http://localhost:5001/signin-oidc" },
-                    FrontChannelLogoutUri = "http://localhost:5001/signout-oidc",
-                    PostLogoutRedirectUris = { "http://localhost:5001/signout-callback-oidc" },
+                    RedirectUris = { $"http://{myLocalIp}:5001/signin-oidc" },
+                    FrontChannelLogoutUri = $"http://{myLocalIp}:5001/signout-oidc",
+                    PostLogoutRedirectUris = { $"http://{myLocalIp}:5001/signout-callback-oidc" },
 
                     AllowOfflineAccess = true,
                     AllowedScopes = { "openid", "profile", "client.service.api", "product.service.api", "api1" }
@@ -72,11 +83,11 @@ namespace AuthServer
 
                     RedirectUris =
                     {
-                        "http://localhost:64003",
+                        $"http://{myLocalIp}:64003",
                     },
-
-                    PostLogoutRedirectUris = { "http://localhost:64003" },
-                    AllowedCorsOrigins = { "http://localhost:64003" },
+                    
+                    PostLogoutRedirectUris = { $"http://{myLocalIp}:64003" },
+                    AllowedCorsOrigins = { $"http://{myLocalIp}:64003" },
 
                     AllowedScopes = { "openid", "profile", "client.service.api", "product.service.api" }
                 },
@@ -88,6 +99,7 @@ namespace AuthServer
                     ClientName = "Resource Owner Client",
 
                     AllowedGrantTypes = GrantTypes.ResourceOwnerPassword,
+                    AllowedCorsOrigins = { $"http://{myLocalIp}:64003" },
 
                     ClientSecrets =
                     {

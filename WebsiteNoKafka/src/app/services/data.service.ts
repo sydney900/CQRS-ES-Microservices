@@ -5,6 +5,7 @@ import { IResource } from '../models/iResource';
 import { LogService } from './log.service';
 import { OidcSecurityService } from 'angular-auth-oidc-client';
 
+//@Injectable()
 @Injectable()
 export class DataService<T extends IResource> {
   private nameOfT: string;

@@ -12,7 +12,10 @@ namespace CQRS.Domain
 
         public ClientDetailDto GetClientDetailDto(Guid id)
         {
-            return ClientMemoryDatabase.details[id];
+            ClientDetailDto client = null;
+            ClientMemoryDatabase.details.TryGetValue(id, out client);
+
+            return client;
         }
     }
 }

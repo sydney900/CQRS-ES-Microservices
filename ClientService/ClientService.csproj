@@ -24,6 +24,7 @@
     <ProjectReference Include="..\CQRS.Core\CQRS.Core.csproj" />
     <ProjectReference Include="..\CQRS.Domain\CQRS.Domain.csproj" />
     <ProjectReference Include="..\SecurityShare\SecurityShare.csproj" />
+    <ProjectReference Include="..\WebApiCommon\WebApiCommon.csproj" />
   </ItemGroup>
 
 </Project>

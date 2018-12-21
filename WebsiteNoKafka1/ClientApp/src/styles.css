@@ -1,0 +1,10 @@
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+
+.red-snackbar {
+    background-color: red;
+  }
+
+  .full-width {
+    width: 100%;
+  }
+  

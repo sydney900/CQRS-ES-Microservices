@@ -6,6 +6,7 @@ using CQRS.Core;
 using CQRS.Domain;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using WebApiCommon.Filters;
 
 namespace ClientService.Controllers
 {
@@ -54,7 +55,8 @@ namespace ClientService.Controllers
         /// </summary>
         /// <param name="name"></param>
         [HttpPost]
-        public void Post(ClientDetailDto client)
+        [ServiceFilter(typeof(ValidateModelAttribute))]
+        public void Post([FromBody]ClientDetailDto client)
         {
             _bus.Send(new CreateClientCommand(Guid.NewGuid(), client.Name));
         }
@@ -63,12 +65,12 @@ namespace ClientService.Controllers
         /// Change a client name
         /// </summary>
         /// <param name="id"></param>
-        /// <param name="name"></param>
-        /// <param name="version"></param>
-        [HttpPut]
-        public void ChangeName(Guid id, string name, int version)
+        /// <param name="client"></param>
+        [HttpPut("ChangeName/{id:guid}")]
+        [ServiceFilter(typeof(ValidateModelAttribute))]
+        public void ChangeName(Guid id, [FromBody]ClientDetailDto client)
         {
-            var command = new RenameClientCommand(id, name, version);
+            var command = new RenameClientCommand(id, client.Name, client.Version);
             _bus.Send(command);
         }
 
@@ -76,10 +78,18 @@ namespace ClientService.Controllers
         /// Delete a client
         /// </summary>
         /// <param name="id"></param>
+        [Route("{id:guid}")]
         [HttpDelete]
         public void Delete(Guid id)
         {
-            ViewData.Model = _readmodel.GetClientDetailDto(id);
+            ClientDetailDto client = _readmodel.GetClientDetailDto(id);
+
+            if (client != null )
+            {
+                var command = new RemoveClientCommand(id, client.Version);
+
+                _bus.Send(command);
+            }
         }
     }
 }

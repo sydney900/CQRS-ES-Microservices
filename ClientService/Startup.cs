@@ -36,16 +36,19 @@ namespace ClientService
                     builder => builder.AllowAnyOrigin()
                     .AllowAnyMethod()
                     .AllowAnyHeader()
-                    .AllowCredentials());
+                    .AllowAnyOrigin()
+                    .AllowCredentials()
+                  );
             });
 
 
             services.AddSingleton<InProcessBus>(ClientInProcessBusFactory.Create());
             services.AddSingleton<IClientReadModel, ClientReadModel>();
+            services.AddScoped<WebApiCommon.Filters.ValidateModelAttribute>();
+
+            SetupToUseIndentityServer.SetupWebApiUseIdentityServer(services, Configuration);
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
-
-           SetupToUseIndentityServer.SetupWebApiUseIdentityServer(services, Configuration);
 
             // Register the Swagger generator, defining 1 or more Swagger documents
             services.AddSwaggerGen(c =>

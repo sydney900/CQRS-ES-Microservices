@@ -1,0 +1,32 @@
+
+<div style="text-align:center">
+  <h3>
+    Clients
+  </h3>
+</div>
+
+<mat-list>
+  <mat-list-item *ngFor="let entry of clients | async" fxLayout="row" fxLayoutAlign="start start" fxLayoutGap="40px" class="full-width">
+    <span fxFlex="20px">
+      <i class="material-icons">person</i>
+    </span>
+
+    <div fxFlex>
+      <h5 matLine>
+        {{entry.name}}
+      </h5>
+      <p matLine>
+        <span> {{entry.email}} </span>
+      </p>
+    </div>
+    <span fxFlex="20px" fxFlexAlign="end">
+      <button (click)="onDeleteClient(entry.id)" mat-icon-button>
+        <i class="material-icons">delete</i>
+      </button>
+    </span>
+  </mat-list-item>
+</mat-list>
+
+<button (click)="onAddClient()" mat-icon-button>
+  <i class="material-icons">add</i>
+</button>

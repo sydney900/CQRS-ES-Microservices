@@ -1,0 +1,21 @@
+
+<mat-toolbar>
+  <mat-toolbar-row>
+    <button type="button" routerLink='' mat-button color="primary">
+      <mat-icon>account_circle</mat-icon>Access Client Service
+    </button>
+  </mat-toolbar-row>
+</mat-toolbar>
+<mat-sidenav-container class="example-container">
+  <mat-sidenav #drawer mode="side" opened role="navigation">
+    <mat-nav-list>
+      <a mat-list-item routerLink='' *ngIf="isAuthorized">Clients</a>
+      <a mat-list-item routerLink='about' *ngIf="isAuthorized">About</a>
+      <a mat-list-item (click)="logout()" *ngIf="isAuthorized">Logout</a>
+      <a mat-list-item (click)="login()" *ngIf="!isAuthorized">Login</a>
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>

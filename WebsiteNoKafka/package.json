@@ -3,8 +3,8 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve --port 64003 --watch",
-    "build": "ng build",
+    "start": "ng serve --host 0.0.0.0 --port 64003 --watch",
+    "build": "ng build --prod",
     "test": "ng test --watch",
     "lint": "ng lint",
     "e2e": "ng e2e"
@@ -16,6 +16,7 @@
     "@angular/common": "^7.1.2",
     "@angular/compiler": "^7.1.2",
     "@angular/core": "^7.1.2",
+    "@angular/flex-layout": "^7.0.0-beta.19",
     "@angular/forms": "^7.1.2",
     "@angular/http": "^7.1.2",
     "@angular/material": "^6.4.7",

@@ -8,6 +8,11 @@ namespace CQRS.Domain
         public string Name { get; set; }
         public int Version { get; set; }
 
+        public ClientDetailDto()
+        {
+            Version = 1;
+        }
+
         public ClientDetailDto(Guid id, string name, int version = 1)
         {
             Id = id;
