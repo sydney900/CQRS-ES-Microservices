@@ -1,5 +1,7 @@
 # CQRS-ES-Kafka-Microservices-Docker
 
+[![Build Status](https://dev.azure.com/wangbing1688/CQRS-ES-Microservices/_apis/build/status/sydney900.CQRS-ES-Microservices?branchName=master)](https://dev.azure.com/wangbing1688/CQRS-ES-Microservices/_build/latest?definitionId=2?branchName=master)
+
 Open solution with Visual Studio 2017 and run in docker mode
 
 ## How to run
