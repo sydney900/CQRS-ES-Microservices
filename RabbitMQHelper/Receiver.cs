@@ -4,96 +4,103 @@ using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Common;
 
 namespace RabbitMQHelper
 {
 
-    public class Receiver<T> : IDisposable where T : class
+    public class Receiver<T> : IDisposable, IRabbitMqReceiver where T : class
     {
-        private string hostName;
         private string queueName;
-        private int port;
-        private string userName;
-        private string password;
-        private string vhost;
         private string exchangeName;
         private string routingKey;
         private bool durable;
         private bool persistent;
 
         private IMySerializer serializer;
-        IReceivedHandler<T> receivedHandler;
+        private IReceivedHandler<T> receivedHandler;
+        private IConnectionFactory connectionFactory;
+        private IEventingBasicConsumerFactory eventingBasicConsumerFactory;
 
-        public Receiver(string hostName, string queueName, IMySerializer serializer, IReceivedHandler<T> receivedHandler, int port = 5672, string userName = null, string password = null, string vhost = null, string exchangeName = null, string routingKey = null, bool durable = false, bool persistent = false)
+        private IConnection connection;
+        private IModel channel;
+        private EventingBasicConsumer consumer;
+        private string consumerTag;
+
+        public Receiver(string queueName, IMySerializer serializer, IReceivedHandler<T> receivedHandler, IConnectionFactory connectionFactory, IEventingBasicConsumerFactory eventingBasicConsumerFactory, string exchangeName = null, string routingKey = null, bool durable = false, bool persistent = false)
         {
-            this.hostName = hostName;
             this.queueName = queueName;
-            this.port = port;
-            this.userName = userName;
-            this.password = password;
-            this.vhost = vhost;
             this.exchangeName = exchangeName;
             this.routingKey = routingKey;
             this.durable = durable;
             this.persistent = persistent;
 
-            this.serializer = serializer;
-            this.receivedHandler = receivedHandler;
+            this.serializer = serializer ?? throw new ArgumentNullException(nameof(serializer));
+            this.receivedHandler = receivedHandler ?? throw new ArgumentNullException(nameof(receivedHandler));
+            this.connectionFactory = connectionFactory ?? throw new ArgumentNullException(nameof(connectionFactory));
+            this.eventingBasicConsumerFactory = eventingBasicConsumerFactory ?? throw new ArgumentNullException(nameof(eventingBasicConsumerFactory));
         }
 
-        public void Receive()
+        public void Connect()
         {
-            var factory = new ConnectionFactory() { HostName = hostName };
-            if (!string.IsNullOrEmpty(userName) && !string.IsNullOrEmpty(password))
+            connection = connectionFactory.CreateConnection();
+            channel = connection.CreateModel();
+
+            if (!string.IsNullOrEmpty(exchangeName))
             {
-                factory.UserName = userName;
-                factory.Password = password;
+                //channel.ExchangeDeclare(exchangeName, ExchangeType.Direct, durable);
             }
-            if (!string.IsNullOrEmpty(vhost))
+
+            Dictionary<String, Object> args = new Dictionary<String, Object>();
+            args.Add("x-message-ttl", 3600000L);
+            var queueDeclareOk = channel.QueueDeclare(queue: queueName, durable: durable, exclusive: false, autoDelete: false, arguments: args);
+            //channel.BasicQos(prefetchSize: 0, prefetchCount: 1, global: false);
+
+            if (!string.IsNullOrEmpty(exchangeName) && !string.IsNullOrEmpty(routingKey))
             {
-                factory.VirtualHost = vhost;
+                channel.QueueBind(queueName, exchangeName, routingKey, args);
             }
-            factory.Port = port;
 
-            using (var connection = factory.CreateConnection())
-            using (var channel = connection.CreateModel())
+            var consumer = eventingBasicConsumerFactory.Create(channel);
+            consumer.Received += (model, ea) =>
             {
-                if (!string.IsNullOrEmpty(exchangeName))
+                try
                 {
-                    channel.ExchangeDeclare(exchangeName, ExchangeType.Direct);
-                }
-
-                Dictionary<String, Object> args = new Dictionary<String, Object>();
-                args.Add("x-message-ttl", 3600000L);
-                channel.QueueDeclare(queue: queueName, durable: durable, exclusive: false, autoDelete: false, arguments: args);
-                //channel.BasicQos(prefetchSize: 0, prefetchCount: 1, global: false);
-
-                if (!string.IsNullOrEmpty(exchangeName) && !string.IsNullOrEmpty(routingKey))
-                {
-                    channel.QueueBind(queueName, exchangeName, routingKey, null);
-                }
-
-                var consumer = new EventingBasicConsumer(channel);
-                consumer.Received += (model, ea) =>
-                {
-                    //Received message
-                    var message = ea.Body.ToUTF8String();
-
-                    channel.BasicAck(deliveryTag: ea.DeliveryTag, multiple: false);
+                        //Received message
+                        var message = ea.Body.ToUTF8String();
 
                     T r = serializer.DeserializeObject<T>(message);
                     receivedHandler.Process(r);
-                };
-                channel.BasicConsume(queue: queueName, autoAck: false, consumer: consumer);
-            }
+                    channel.BasicAck(deliveryTag: ea.DeliveryTag, multiple: false);
+
+                }
+                catch (Exception ex)
+                {
+                    Console.Error.WriteLine(ex.Message, ex);
+                }
+            };
+            channel.BasicConsume(queue: queueName, autoAck: false, consumer: consumer);
+
+            Console.WriteLine(queueDeclareOk?.MessageCount);
+            Console.WriteLine(queueDeclareOk?.ConsumerCount);
+
         }
 
         public void Dispose()
         {
+            if (!string.IsNullOrEmpty(consumerTag) && channel != null)
+            {
+                channel.BasicCancel(consumerTag);
+            }
+
+            if (consumer != null)
+                consumer.RemoveAllEventHandlers();
+
+            if (channel != null)
+                channel.Dispose();
+
+            if (connection != null)
+                connection.Dispose();
+
             this.RemoveAllEventHandlers();
         }
     }

@@ -16,6 +16,6 @@
     }
   },
   "include": [
-    "src/**/*"
+    "src/**/*", "../RabbitMQHelper.Test/ReceiverUnitTest.cs", "../RabbitMQHelper.Test/SenderUnitTest.cs"
   ]
 }
