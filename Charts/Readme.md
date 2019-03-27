@@ -142,7 +142,7 @@ kubectl proxy
 and then launch URL below to show dashboard
 
 http://localhost:8001/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy/
-```
+
 3. the command examples to get credential to view dashboard
 ```
 kubectl -n default get secret
