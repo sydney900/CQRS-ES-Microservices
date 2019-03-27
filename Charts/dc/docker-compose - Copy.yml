@@ -1,0 +1,67 @@
+version: '3.0'
+
+services:
+  apigateway:
+    image: apigateway
+    build:
+      context: .
+      dockerfile: ApiGateway/Dockerfile
+    ports: 
+      - "64000:80"
+    environment: 
+      ASPNETCORE_ENVIRONMENT: Production
+
+  authserver:
+    image: authserver
+    build:
+      context: .
+      dockerfile: AuthServer/Dockerfile
+    ports: 
+      - "5000:80"
+    environment: 
+      ASPNETCORE_ENVIRONMENT: Production
+      MYIP: ${MYIP}
+      
+  clientservice:
+    image: clientservice
+    build:
+      context: .
+      dockerfile: ClientService/Dockerfile
+    ports: 
+      - "64001:80"
+    environment: 
+      CLIENTID: "ro.client"
+      CLIENTSECRETS: "8FEA01FC-5D0C-4285-9E69-27C04D53D7D2"
+      IDENTITYSERVERURL: "http://${MYIP}:5000"
+      APINAME: "client.service.api"
+      APISECRET: "client.service.api.secret"
+      ASPNETCORE_ENVIRONMENT: Production
+
+  productservice:
+    image: productservice
+    build:
+      context: .
+      dockerfile: ProductService/Dockerfile
+    ports: 
+      - "64002:80"
+    environment: 
+      CLIENTID: "ro.client"
+      CLIENTSECRETS: "8FEA01FC-5D0C-4285-9E69-27C04D53D7D2"
+      IDENTITYSERVERURL: "http://${MYIP}:5000"
+      APINAME: "product.service.api"
+      ASPNETCORE_ENVIRONMENT: Production
+
+  websitenokafka:
+    image: websitenokafka
+    build:
+      context: WebsiteNoKafka
+      dockerfile: Dockerfile
+    ports: 
+      - "64003:80"
+      - "64443:443"
+    environment: 
+      APIGATEWAY_URL: "apigateway:64000"
+      AUTH_URL: "http://${MYIP}:5000"
+      LOG_URL: "http://${MYIP}:5001"
+      CLIENTID: "spa"
+      SCOPE: "openid profile client.service.api product.service.api"

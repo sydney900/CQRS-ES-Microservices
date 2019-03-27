@@ -1,0 +1,46 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    run: {{ .Release.Name }}-{{ .Values.authserver.name }}    
+  name: {{ .Release.Name }}-{{ .Values.authserver.name }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        run: {{ .Release.Name }}-{{ .Values.authserver.name }}    
+
+    spec:
+      containers:
+      - image: {{ .Values.authserver.image.repo }}:{{ .Values.authserver.image.tag }}
+        name: {{ .Values.authserver.name }}
+        ports:
+        - containerPort: {{ .Values.authserver.containerPort }}
+        livenessProbe:
+          httpGet:
+            path: {{ .Values.healthcheck.liveness.path }}
+            port: {{ .Values.apigateway.containerPort }}
+          initialDelaySeconds: {{ .Values.healthcheck.liveness.initialDelaySeconds }}
+          periodSeconds: {{ .Values.healthcheck.liveness.periodSeconds }}
+          failureThreshold: {{ .Values.healthcheck.liveness.failureThreshold }}
+          successThreshold: {{ .Values.healthcheck.liveness.successThreshold }}
+        readinessProbe:
+          httpGet:
+            path: {{ .Values.healthcheck.readiness.path }}
+            port: {{ .Values.apigateway.containerPort }}
+          initialDelaySeconds: {{ .Values.healthcheck.readiness.initialDelaySeconds }}
+          periodSeconds: {{ .Values.healthcheck.readiness.periodSeconds }}
+          failureThreshold: {{ .Values.healthcheck.readiness.failureThreshold }}
+          successThreshold: {{ .Values.healthcheck.readiness.successThreshold }}
+        resources: {}
+        env:
+        - name: ASPNETCORE_ENVIRONMENT
+          value: {{ .Values.ASPNETCORE_ENVIRONMENT }}
+        - name: MYIP
+          value: {{ .Values.authserver.myIP }}
+      restartPolicy: Always      
+status: {}

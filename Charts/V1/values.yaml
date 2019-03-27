@@ -1,0 +1,64 @@
+replicaCount: 1
+
+ASPNETCORE_ENVIRONMENT: Production
+
+apigateway:
+  name: apigateway
+  image:
+    repo: sydney900/apigateway
+    tag: latest
+  containerPort: 80
+  exposePort: 64000
+
+authserver:
+  name: authserver
+  image:
+    repo: sydney900/authserver
+    tag: latest
+  containerPort: 80
+  exposePort: 5000
+  myIP: 203.111.101.102
+
+clientservice:
+  name: clientservice
+  image:
+    repo: sydney900/clientservice
+    tag: latest
+  containerPort: 80
+  exposePort: 64001
+
+productservice:  
+  name: productservice
+  image:
+    repo: sydney900/productservice
+    tag: latest
+  containerPort: 80
+  exposePort: 64002
+
+websitenokafka:
+  name: websitenokafka
+  image:
+    repo: sydney900/websitenokafka
+    tag: latest
+  containerPort: 80
+  exposePort: 64003
+  containerPortSSL: 443
+  exposePortSSL: 64443
+
+healthcheck:
+  liveness:
+    path: /health/live
+    initialDelaySeconds: 30
+    periodSeconds: 30
+    failureThreshold: 3
+    successThreshold: 1        
+  readiness:
+    path: /health/ready
+    initialDelaySeconds: 5
+    periodSeconds: 5
+    failureThreshold: 3
+    successThreshold: 2
+
+logserver:
+  exposePort: 5001
+  myIP: 203.111.101.103

@@ -1,8 +1,14 @@
-FROM microsoft/aspnetcore:2.0 AS base
+FROM microsoft/dotnet:2.2-aspnetcore-runtime AS base
 WORKDIR /app
 EXPOSE 80
 
-FROM microsoft/aspnetcore-build:2.0 AS build
+FROM microsoft/dotnet:2.2-sdk AS build
+WORKDIR /src/WebApiCommon
+COPY WebApiCommon/WebApiCommon.csproj .
+COPY WebApiCommon/. .
+RUN dotnet restore -nowarn:msb3202,nu1503
+RUN dotnet build -c Release
+
 WORKDIR /src
 COPY ["AuthServer/AuthServer.csproj", "AuthServer/"]
 RUN dotnet restore "AuthServer/AuthServer.csproj"

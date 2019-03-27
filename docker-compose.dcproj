@@ -3,20 +3,16 @@
   <PropertyGroup Label="Globals">
     <ProjectVersion>2.1</ProjectVersion>
     <DockerTargetOS>Linux</DockerTargetOS>
-    <ProjectGuid>cb2807b8-6336-4b74-83e8-bfc3a8c33532</ProjectGuid>
+    <ProjectGuid>4b63e19d-6990-4603-b785-7c19e72d0c94</ProjectGuid>
     <DockerLaunchAction>LaunchBrowser</DockerLaunchAction>
-    <DockerServiceUrl>http://localhost:{ServicePort}/clients</DockerServiceUrl>
+    <DockerServiceUrl>{Scheme}://localhost:{ServicePort}</DockerServiceUrl>
     <DockerServiceName>apigateway</DockerServiceName>
   </PropertyGroup>
   <ItemGroup>
-    <None Include="docker-compose.yml" />
-    <None Include="docker-compose-V1.yml" />
-    <None Include="docker-compose.override.yml" />
-    <None Include="docker-compose_V1.override.yml" />
-    <None Include="docker-compose_V2.override.yml">
-      <DependentUpon>docker-compose_V2.yml</DependentUpon>
+    <None Include="docker-compose.override.yml">
+      <DependentUpon>docker-compose.yml</DependentUpon>
     </None>
-    <None Include="docker-compose_V2.yml" />
+    <None Include="docker-compose.yml" />
     <None Include=".dockerignore" />
   </ItemGroup>
 </Project>

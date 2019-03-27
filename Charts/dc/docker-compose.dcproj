@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" Sdk="Microsoft.Docker.Sdk">
+  <PropertyGroup Label="Globals">
+    <ProjectVersion>2.1</ProjectVersion>
+    <DockerTargetOS>Linux</DockerTargetOS>
+    <ProjectGuid>cb2807b8-6336-4b74-83e8-bfc3a8c33532</ProjectGuid>
+    <DockerLaunchAction>LaunchBrowser</DockerLaunchAction>
+    <DockerServiceUrl>http://localhost:{ServicePort}/clients</DockerServiceUrl>
+    <DockerServiceName>apigateway</DockerServiceName>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Include="docker-compose - Copy.yml" />
+    <None Include="docker-compose.yml" />
+    <None Include="docker-compose-V1.yml" />
+    <None Include="docker-compose.override.yml" />
+    <None Include="docker-compose_V1.override.yml" />
+    <None Include="docker-compose_V2.override.yml">
+      <DependentUpon>docker-compose_V2.yml</DependentUpon>
+    </None>
+    <None Include="docker-compose_V2.yml" />
+    <None Include=".dockerignore" />
+  </ItemGroup>
+</Project>

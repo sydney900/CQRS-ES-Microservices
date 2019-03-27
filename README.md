@@ -21,6 +21,9 @@ and then open URL: http://10.0.75.1:64003 in your browser
 ## Version 2
 ![alt text](https://github.com/sydney900/CQRS-RS-Microservices/blob/master/Version2.png "Version 2 Chart")
 
+## How to run the microservices on Kubernetes cluster
+[See document how to run the microservices on Kubernetes cluster](https://github.com/sydney900/CQRS-RS-Microservices/blob/master/Charts/Readme.md)
+
 
 ## How to use minikube
 ### install Minikube and Kubectl

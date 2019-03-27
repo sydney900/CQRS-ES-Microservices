@@ -1,0 +1,31 @@
+version: '3.0'
+
+services:
+  apigateway:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+#    ports:
+#      - "80"
+
+  authserver:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+#    ports:
+#      - "80"
+
+  clientservice:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+#    ports:
+#      - "80"
+
+  productservice:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+#    ports:
+#      - "80"
+
+  websitenokafka:
+    ports: 
+      - 64003:80
+      - 9229:9229

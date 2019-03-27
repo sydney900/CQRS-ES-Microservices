@@ -16,6 +16,6 @@
     }
   },
   "include": [
-    "src/**/*", "../RabbitMQHelper.Test/ReceiverUnitTest.cs", "../RabbitMQHelper.Test/SenderUnitTest.cs"
+    "src/**/*", "../RabbitMQHelper.Test/ReceiverUnitTest.cs", "../RabbitMQHelper.Test/SenderUnitTest.cs", "../WebApiCommon/HealthCheck/SimpleLivenessHealthCheck.cs"
   ]
 }

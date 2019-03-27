@@ -1,10 +1,10 @@
-FROM node:10-alpine as builder
+FROM node:11-alpine as builder
 RUN apk update && apk upgrade && apk add --no-cache bash git openssh
 WORKDIR /app
-COPY ["package.json", "package-lock.json", "./"]
+COPY ["WebsiteNoKafka/package.json", "WebsiteNoKafka/package-lock.json", "./"]
 RUN npm install
-COPY ["tsconfig.json", "tslint.json", "angular.json", "default.conf", "sydney900.pem", "sydney900.rsa", "./"]
-COPY src/ ./src/
+COPY ["WebsiteNoKafka/tsconfig.json", "WebsiteNoKafka/tslint.json", "WebsiteNoKafka/angular.json", "WebsiteNoKafka/default.conf", "WebsiteNoKafka/sydney900.pem", "WebsiteNoKafka/sydney900.rsa", "./"]
+COPY WebsiteNoKafka/src/ ./src/
 RUN npm run build
 
 FROM nginx:1.14.1-alpine

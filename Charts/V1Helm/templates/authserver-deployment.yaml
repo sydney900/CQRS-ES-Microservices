@@ -1,0 +1,67 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-{{ .Values.authserver.name }}
+  labels:
+    app.kubernetes.io/name: {{ .Values.authserver.name }}
+    helm.sh/chart: {{ include "V1Helm.chart" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: {{ .Values.authserver.name }}
+      app.kubernetes.io/instance: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: {{ .Values.authserver.name }}
+        app.kubernetes.io/instance: {{ .Release.Name }}
+    spec:
+      containers:
+        - name: {{ .Values.authserver.name }}
+          image: {{ .Values.authserver.image.repo }}:{{ .Values.authserver.image.tag }}          
+          imagePullPolicy: {{ .Values.authserver.image.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: {{ .Values.authserver.containerPort }}
+              protocol: TCP
+          env:
+            - name: ASPNETCORE_ENVIRONMENT
+              value: {{ .Values.ASPNETCORE_ENVIRONMENT }}
+            - name: NETWORK_HOST
+              value: "eth0:ipv4"
+            - name: MYIP
+              value: {{ .Values.authserver.myIP }}
+          livenessProbe:
+            httpGet:
+              path: {{ .Values.healthcheck.liveness.path }}
+              port: {{ .Values.authserver.service.exposePort }}
+            initialDelaySeconds: {{ .Values.healthcheck.liveness.initialDelaySeconds }}
+            periodSeconds: {{ .Values.healthcheck.liveness.periodSeconds }}
+            failureThreshold: {{ .Values.healthcheck.liveness.failureThreshold }}
+            successThreshold: {{ .Values.healthcheck.liveness.successThreshold }}
+          readinessProbe:
+            httpGet:
+              path: {{ .Values.healthcheck.readiness.path }}
+              port: {{ .Values.authserver.service.exposePort }}
+            initialDelaySeconds: {{ .Values.healthcheck.readiness.initialDelaySeconds }}
+            periodSeconds: {{ .Values.healthcheck.readiness.periodSeconds }}
+            failureThreshold: {{ .Values.healthcheck.readiness.failureThreshold }}
+            successThreshold: {{ .Values.healthcheck.readiness.successThreshold }}
+          restartPolicy: Always
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+    {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+    {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}

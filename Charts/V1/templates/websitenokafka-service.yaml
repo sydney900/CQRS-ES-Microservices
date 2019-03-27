@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: null
+  labels:
+    run: {{ .Release.Name }}-{{ .Values.websitenokafka.name }}-service
+  name: {{ .Release.Name }}-{{ .Values.websitenokafka.name }}-service
+spec:
+  type: loadBalancer
+  ports:
+  - port: {{ .Values.websitenokafka.exposePort }}
+    name: "{{ .Values.websitenokafka.exposePort }}"
+    protocol: TCP
+    targetPort: {{ .Values.websitenokafka.containerPort }}
+  - port: {{ .Values.websitenokafka.exposePortSSL }}
+    name: "{{ .Values.websitenokafka.exposePortSSL }}"
+    protocol: TCP
+    targetPort: {{ .Values.websitenokafka.containerPortSSL }}
+  selector:
+    run: {{ .Release.Name }}-{{ .Values.websitenokafka.name }}
+status:
+  loadBalancer: {}

@@ -1,0 +1,37 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    run: {{ .Release.Name }}-{{ .Values.websitenokafka.name }}    
+  name: {{ .Release.Name }}-{{ .Values.websitenokafka.name }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        run: {{ .Release.Name }}-{{ .Values.websitenokafka.name }}    
+
+    spec:
+      containers:
+      - image: {{ .Values.websitenokafka.image.repo }}:{{ .Values.websitenokafka.image.tag }}
+        name: {{ .Values.websitenokafka.name }}
+        ports:
+        - containerPort: {{ .Values.websitenokafka.containerPort }}
+        - containerPort: {{ .Values.websitenokafka.containerPortSSL }}
+        resources: {}
+        env:
+        - name: APIGATEWAY_URL
+          value: apigateway:64000
+        - name: AUTH_URL
+          value: http://{{ .Values.authserver.myIP }}:{{ .Values.authserver.exposePort }}
+        - name: CLIENTID
+          value: spa
+        - name: LOG_URL
+          value: http://{{ .Values.logserver.myIP }}:{{ .Values.logserver.exposePort }}
+        - name: SCOPE
+          value: openid profile client.service.api product.service.api
+      restartPolicy: Always      
+status: {}

@@ -10,6 +10,7 @@ using Swashbuckle.AspNetCore.Swagger;
 using System;
 using System.IO;
 using System.Reflection;
+using WebApiCommon.HealthCheck;
 
 namespace ClientService
 {
@@ -48,7 +49,9 @@ namespace ClientService
 
             SetupToUseIndentityServer.SetupWebApiUseIdentityServer(services, Configuration);
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+
+            services.AddHealthChecks().AddMySimpleHealthCheck();
 
             // Register the Swagger generator, defining 1 or more Swagger documents
             services.AddSwaggerGen(c =>
@@ -101,6 +104,8 @@ Provide APIs of the creation, update and deletion of all clients.
 
             app.UseAuthentication();
             app.UseMvc();
+
+            app.UseMySimpleHealthCheck();
         }
     }
 }

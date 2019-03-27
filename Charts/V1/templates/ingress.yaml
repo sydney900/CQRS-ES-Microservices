@@ -1,0 +1,18 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: my-frist-ingress
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+    nginx.ingress.kubernetes.io/rewrite-target: /  rules:
+  - http:
+      paths:
+      - path: /
+        backend:
+          serviceName: apigateway
+          servicePort: 64000
+      - path: /web
+        backend:
+          serviceName: websitenokafka
+          servicePort: 64003

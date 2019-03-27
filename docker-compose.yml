@@ -1,8 +1,8 @@
-version: '3.0'
+version: '3.4'
 
 services:
   apigateway:
-    image: apigateway
+    image: ${DOCKER_REGISTRY-}apigateway
     build:
       context: .
       dockerfile: ApiGateway/Dockerfile
@@ -12,7 +12,7 @@ services:
       ASPNETCORE_ENVIRONMENT: Production
 
   authserver:
-    image: authserver
+    image: ${DOCKER_REGISTRY-}authserver
     build:
       context: .
       dockerfile: AuthServer/Dockerfile
@@ -21,9 +21,10 @@ services:
     environment: 
       ASPNETCORE_ENVIRONMENT: Production
       MYIP: ${MYIP}
-      
+
+
   clientservice:
-    image: clientservice
+    image: ${DOCKER_REGISTRY-}clientservice
     build:
       context: .
       dockerfile: ClientService/Dockerfile
@@ -38,7 +39,7 @@ services:
       ASPNETCORE_ENVIRONMENT: Production
 
   productservice:
-    image: productservice
+    image: ${DOCKER_REGISTRY-}productservice
     build:
       context: .
       dockerfile: ProductService/Dockerfile
@@ -52,10 +53,10 @@ services:
       ASPNETCORE_ENVIRONMENT: Production
 
   websitenokafka:
-    image: websitenokafka
+    image: ${DOCKER_REGISTRY-}websitenokafka
     build:
-      context: WebsiteNoKafka
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: WebsiteNoKafka/Dockerfile
     ports: 
       - "64003:80"
       - "64443:443"

@@ -2,10 +2,12 @@
 using CQRS.Core;
 using CQRS.Domain;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Swashbuckle.AspNetCore.Swagger;
+using WebApiCommon.HealthCheck;
 
 namespace ProductService
 {
@@ -36,6 +38,8 @@ namespace ProductService
             SetupToUseIndentityServer.SetupWebApiUseIdentityServer(services, Configuration);
 
             services.AddMvc();
+
+            services.AddHealthChecks().AddMySimpleHealthCheck();
 
             // Register the Swagger generator, defining 1 or more Swagger documents
             services.AddSwaggerGen(c =>
@@ -74,6 +78,8 @@ namespace ProductService
 
             app.UseAuthentication();
             app.UseMvc();
+
+            app.UseMySimpleHealthCheck();
         }
     }
 }

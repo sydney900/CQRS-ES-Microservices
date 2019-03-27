@@ -14,6 +14,7 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.IO;
 using System.Security.Cryptography.X509Certificates;
+using WebApiCommon.HealthCheck;
 
 namespace AuthServer
 {
@@ -67,6 +68,8 @@ namespace AuthServer
             //{
             //    builder.AddSigningCredential(new X509Certificate2(Path.Combine(".", "sydney900.pfx"), "Sydney900"));
             //}
+
+            services.AddHealthChecks().AddMySimpleHealthCheck();
         }
 
         public void Configure(IApplicationBuilder app, ILoggerFactory loggerFactory)
@@ -81,6 +84,7 @@ namespace AuthServer
                 app.UseExceptionHandler("/Home/Error");
             }
 
+           
             loggerFactory.AddConsole(LogLevel.Trace);
 
             app.UseCors(builder => builder
@@ -92,6 +96,8 @@ namespace AuthServer
             app.UseStaticFiles();
             app.UseIdentityServer();
             app.UseMvcWithDefaultRoute();
+
+            app.UseMySimpleHealthCheck();
         }
     }
 }

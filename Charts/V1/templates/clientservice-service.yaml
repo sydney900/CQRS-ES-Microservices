@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: null
+  labels:
+    run: {{ .Release.Name }}-{{ .Values.clientservice.name }}-service
+  name: {{ .Release.Name }}-{{ .Values.clientservice.name }}-service
+spec:
+  ports:
+  - port: {{ .Values.clientservice.exposePort }}
+    protocol: TCP
+    targetPort: {{ .Values.clientservice.containerPort }}
+  selector:
+    run: {{ .Release.Name }}-{{ .Values.clientservice.name }}
+status:
+  loadBalancer: {}

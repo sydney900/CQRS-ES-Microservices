@@ -1,0 +1,54 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    run: {{ .Release.Name }}-{{ .Values.productservice.name }}    
+  name: {{ .Release.Name }}-{{ .Values.productservice.name }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        run: {{ .Release.Name }}-{{ .Values.productservice.name }}    
+
+    spec:
+      containers:
+      - image: {{ .Values.productservice.image.repo }}:{{ .Values.productservice.image.tag }}
+        name: {{ .Values.productservice.name }}
+        ports:
+        - containerPort: {{ .Values.productservice.containerPort }}
+        livenessProbe:
+          httpGet:
+            path: {{ .Values.healthcheck.liveness.path }}
+            port: {{ .Values.apigateway.containerPort }}
+          initialDelaySeconds: {{ .Values.healthcheck.liveness.initialDelaySeconds }}
+          periodSeconds: {{ .Values.healthcheck.liveness.periodSeconds }}
+          failureThreshold: {{ .Values.healthcheck.liveness.failureThreshold }}
+          successThreshold: {{ .Values.healthcheck.liveness.successThreshold }}
+        readinessProbe:
+          httpGet:
+            path: {{ .Values.healthcheck.readiness.path }}
+            port: {{ .Values.apigateway.containerPort }}
+          initialDelaySeconds: {{ .Values.healthcheck.readiness.initialDelaySeconds }}
+          periodSeconds: {{ .Values.healthcheck.readiness.periodSeconds }}
+          failureThreshold: {{ .Values.healthcheck.readiness.failureThreshold }}
+          successThreshold: {{ .Values.healthcheck.readiness.successThreshold }}
+        resources: {}
+        env:
+        - name: APINAME
+          value: product.service.api
+        - name: APISECRET
+          value: product.service.api.secret
+        - name: ASPNETCORE_ENVIRONMENT
+          value: {{ .Values.ASPNETCORE_ENVIRONMENT }}
+        - name: CLIENTID
+          value: ro.client
+        - name: CLIENTSECRETS
+          value: 8FEA01FC-5D0C-4285-9E69-27C04D53D7D2
+        - name: IDENTITYSERVERURL
+          value: http://{{ .Values.authserver.myIP }}:{{ .Values.authserver.exposePort }}
+      restartPolicy: Always      
+status: {}

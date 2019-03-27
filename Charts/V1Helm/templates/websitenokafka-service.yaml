@@ -1,0 +1,24 @@
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: null
+  labels:
+    run: {{ .Release.Name }}-{{ .Values.websitenokafka.name }}-service
+  name: {{ .Values.websitenokafka.name }}
+spec:
+  type: {{ .Values.websitenokafka.service.type }}
+  ports:
+  - name: "{{ .Values.websitenokafka.service.exposePort }}"
+    port: {{ .Values.websitenokafka.service.exposePort }}
+    protocol: TCP
+    targetPort: {{ .Values.websitenokafka.containerPort }}
+  - name: "{{ .Values.websitenokafka.service.exposePortSSL }}"
+    port: {{ .Values.websitenokafka.service.exposePortSSL }}    
+    protocol: TCP
+    targetPort: {{ .Values.websitenokafka.containerPortSSL }}
+  selector:
+    app.kubernetes.io/name: {{ .Values.websitenokafka.name }}
+    app.kubernetes.io/instance: {{ .Release.Name }}-{{ .Values.websitenokafka.name }}
+
+status:
+  loadBalancer: {}

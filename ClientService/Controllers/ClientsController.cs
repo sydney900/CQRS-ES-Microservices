@@ -53,7 +53,7 @@ namespace ClientService.Controllers
         /// <summary>
         /// Create a new client
         /// </summary>
-        /// <param name="name"></param>
+        /// <param name="client"></param>
         [HttpPost]
         [ServiceFilter(typeof(ValidateModelAttribute))]
         public void Post([FromBody]ClientDetailDto client)

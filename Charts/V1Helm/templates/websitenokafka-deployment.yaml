@@ -1,0 +1,57 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-{{ .Values.websitenokafka.name }}
+  labels:
+    app.kubernetes.io/name: {{ .Values.websitenokafka.name }}
+    helm.sh/chart: {{ include "V1Helm.chart" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: {{ .Values.websitenokafka.name }}
+      app.kubernetes.io/instance: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: {{ .Values.websitenokafka.name }}
+        app.kubernetes.io/instance: {{ .Release.Name }}
+    spec:
+      containers:
+        - name: {{ .Values.websitenokafka.name }}
+          image: {{ .Values.websitenokafka.image.repo }}:{{ .Values.websitenokafka.image.tag }}          
+          imagePullPolicy: {{ .Values.websitenokafka.image.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: {{ .Values.websitenokafka.containerPort }}
+              protocol: TCP
+          env:
+            - name: APIGATEWAY_URL
+              value: http://{{ .Values.apigateway.myIP }}:{{ .Values.apigateway.service.exposePort }}
+            - name: AUTH_URL
+              value: http://{{ .Values.authserver.myIP }}:{{ .Values.authserver.service.exposePort }}
+            - name: CLIENTID
+              value: spa
+            - name: LOG_URL
+              value: http://{{ .Values.logserver.myIP }}:{{ .Values.logserver.exposePort }}
+            - name: SCOPE
+              value: openid profile client.service.api product.service.api
+            - name: NETWORK_HOST
+              value: "eth0:ipv4"
+          restartPolicy: Always
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+    {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+    {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}

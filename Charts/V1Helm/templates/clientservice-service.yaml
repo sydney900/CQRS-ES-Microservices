@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: null
+  labels:
+    run: {{ .Release.Name }}-{{ .Values.clientservice.name }}-service
+  name: {{ .Release.Name }}-{{ .Values.clientservice.name }}-service
+spec:
+  type: {{ .Values.clientservice.service.type }}
+  ports:
+  - port: {{ .Values.clientservice.service.exposePort }}
+    protocol: TCP
+    targetPort: {{ .Values.clientservice.containerPort }}
+  selector:
+    app.kubernetes.io/name: {{ .Values.clientservice.name }}
+    app.kubernetes.io/instance: {{ .Release.Name }}-{{ .Values.clientservice.name }}
+
+status:
+  loadBalancer: {}
